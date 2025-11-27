@@ -1,3 +1,3 @@
 class Meta {
-  
+  const Meta();
 }
