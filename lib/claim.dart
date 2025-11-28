@@ -2,6 +2,7 @@ import 'package:openid4vp_dcql/json.dart';
 
 class Claim with JsonSerializable {
   final String? id;
+
   /// The path to the claim in the credential. Must not be empty. String / int / null values are allowed.
   final List<dynamic> path;
   final List<dynamic>? values;
@@ -9,6 +10,12 @@ class Claim with JsonSerializable {
   Claim({this.id, required this.path, this.values}) {
     assert(path.isNotEmpty, 'Claim path cannot be empty');
     assert(values == null || values!.isNotEmpty, 'Claim values cannot be an empty list');
+    for (var element in path) {
+      assert(
+        element is String || element is int || element == null,
+        'Claim path elements must be String, int, or null',
+      );
+    }
   }
 
   Claim copyWith({String? id, List<dynamic>? values}) {
