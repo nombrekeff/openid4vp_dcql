@@ -41,6 +41,11 @@ class DcqlCredentialBuilder extends DcqlBuilder {
     return _credentialBuilder;
   }
 
+  DcqlCredentialBuilder multiple([bool multiple = true]) {
+    _credential.multiple = multiple;
+    return _credentialBuilder;
+  }
+
   /// https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-set-query
   DcqlCredentialBuilder claimSet(List<String> ids) {
     if (_credential.claims == null || _credential.claims!.isEmpty) {

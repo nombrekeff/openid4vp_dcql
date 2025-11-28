@@ -2,7 +2,8 @@ import 'package:openid4vp_dcql/json.dart';
 
 class Claim with JsonSerializable {
   final String? id;
-  final List<String> path;
+  /// The path to the claim in the credential. Must not be empty. String / int / null values are allowed.
+  final List<dynamic> path;
   final List<dynamic>? values;
 
   Claim({this.id, required this.path, this.values}) {
