@@ -8,7 +8,6 @@ class CredentialSet with JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    return {'options': options, if (required != null) 'required': required};
   }
 }

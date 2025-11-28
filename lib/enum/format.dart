@@ -1,6 +1,8 @@
-class Format {
+import 'package:openid4vp_dcql/json.dart';
+
+class Format with JsonSerializable {
   static const sd_jwt = Format('dc+sd-jwt');
-  static const mso_mdoc = Format('dc+mso-mdoc');
+  static const mso_mdoc = Format('mso_mdoc');
   static const w3c = Format('jwt_vc_json');
 
   // Convenience aliases
@@ -16,6 +18,11 @@ class Format {
 
   @override
   String toString() {
+    return name;
+  }
+
+  @override
+  toJson() {
     return name;
   }
 }

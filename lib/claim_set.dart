@@ -6,7 +6,7 @@ class ClaimSet with JsonSerializable {
   ClaimSet({required this.ids});
 
   @override
-  Map<String, dynamic> toJson() {
-    throw UnimplementedError();
+  List<String> toJson() {
+    return ids;
   }
 }

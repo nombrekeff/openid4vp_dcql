@@ -1,7 +1,8 @@
 import 'package:openid4vp_dcql/enum/doc_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
+import 'package:openid4vp_dcql/json.dart';
 
-class CredentialType {
+class CredentialType with JsonSerializable {
   final Format format;
   final String docType;
 
@@ -21,4 +22,9 @@ class CredentialType {
     format: Format.jwt,
     docType: DocType.pidEuOfficial, // e.g., Personal Identity Document
   );
+
+  @override
+  toJson() {
+    return {'format': format.name, 'doc_type': docType};
+  }
 }

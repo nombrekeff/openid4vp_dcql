@@ -64,7 +64,7 @@ void main() {
             .build();
 
         expect(query.credentials.first.claimSets, hasLength(1));
-        expect(query.credentials.first.claimSets.first, equals(claimSetIds));
+        expect(query.credentials.first.claimSets?.first, equals(claimSetIds));
       });
 
       test('mdoc_dl() helper sets format', () {

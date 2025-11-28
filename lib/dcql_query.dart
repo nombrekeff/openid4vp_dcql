@@ -36,7 +36,9 @@ class DcqlQuery with JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    return {
+      'credentials': credentials.map((c) => c.toJson()).toList(),
+      'credential_sets': credentialSets.map((cs) => cs.toJson()).toList(),
+    };
   }
 }

@@ -1,3 +1,4 @@
 mixin JsonSerializable {
-  Map<String, dynamic> toJson();
+  /// Converts the object to a JSON-serializable map/list.
+  dynamic toJson();
 }

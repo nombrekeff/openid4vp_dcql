@@ -28,7 +28,6 @@ class Meta with JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    return _meta;
   }
 }
