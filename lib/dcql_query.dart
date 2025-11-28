@@ -7,8 +7,31 @@ class DcqlQuery {
   final List<CredentialSet> credentialSets;
 
   DcqlQuery({
-     List<Credential>? credentials,
-     List<CredentialSet>? credentialSets,
+    List<Credential>? credentials,
+    List<CredentialSet>? credentialSets,
   }) : credentials = credentials ?? [],
        credentialSets = credentialSets ?? [];
+
+  DcqlQuery addCredential(Credential credential) {
+    credentials.add(credential);
+    return this;
+  }
+
+  DcqlQuery addCredentialSet(CredentialSet credentialSet) {
+    credentialSets.add(credentialSet);
+    return this;
+  }
+
+  bool removeCredential(Credential credential) {
+    return credentials.remove(credential);
+  }
+
+  bool removeCredentialSet(CredentialSet credentialSet) {
+    return credentialSets.remove(credentialSet);
+  }
+
+  @override
+  String toString() {
+    return 'DcqlQuery(credentials: $credentials, credentialSets: $credentialSets)';
+  }
 }

@@ -2,22 +2,41 @@ import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 import 'package:openid4vp_dcql/meta.dart';
 
-abstract class Credential<C extends Claim> {
-  final String id;
-  final Meta meta;
-  final Format format;
-  final List<C> claims;
+/// https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query
+class Credential<C extends Claim> {
+  String id;
+  Meta meta;
+  bool multiple;
 
+  /// The format of the credential (e.g., mdoc, sd_jwt, etc.)
+  /// Defaults to [Format.sd_jwt]
+  Format format;
+  List<C> claims;
+
+  /// A list of claim sets, where each claim set is a list of claim IDs.
+  List<List<String>> claimSets;
+
+  /// Format defaults to [Format.sd_jwt]
   Credential({
     required this.id,
-    required this.format,
-    this.meta = const Meta(),
-    this.claims = const [],
-  });
+    this.format = Format.sd_jwt,
+    Meta? meta,
+    List<C>? claims,
+    List<List<String>>? claimSets,
+    this.multiple = false,
+  }) : meta = meta ?? Meta(),
+       claims = claims ?? [],
+       claimSets = claimSets ?? [];
 
   /// Adds a claim to the credential and returns the updated credential.
   Credential<C> addClaim(C claim) {
     claims.add(claim);
+    return this;
+  }
+
+  /// Adds a claim set to the credential and returns the updated credential.
+  Credential<C> addClaimSet(List<String> ids) {
+    claimSets.add(ids);
     return this;
   }
 
@@ -27,25 +46,9 @@ abstract class Credential<C extends Claim> {
     return this;
   }
 
-  static MdocCredential mdoc({
-    required String id,
-    Meta meta = const Meta(),
-    List<MdocClaim> claims = const [],
-  }) => MdocCredential(id: id, meta: meta, claims: claims);
-
-  static MdocCredential sdJwt({
-    required String id,
-    Meta meta = const Meta(),
-    List<MdocClaim> claims = const [],
-  }) => MdocCredential(id: id, meta: meta, claims: claims);
-}
-
-class MdocCredential extends Credential<MdocClaim> {
-  MdocCredential({required super.id, super.meta, super.claims = const []})
-    : super(format: Format.mdoc);
-}
-
-class SdJwtCredential extends Credential<Claim> {
-  SdJwtCredential({required super.id, super.meta, super.claims = const []})
-    : super(format: Format.jwt);
+  /// Removes a claim set from the credential and returns the updated credential.
+  Credential<C> removeClaimSet(List<String> ids) {
+    claimSets.removeWhere((claimSet) => claimSet == ids);
+    return this;
+  }
 }
