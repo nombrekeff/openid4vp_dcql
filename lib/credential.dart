@@ -1,9 +1,10 @@
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
+import 'package:openid4vp_dcql/json.dart';
 import 'package:openid4vp_dcql/meta.dart';
 
 /// https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query
-class Credential<C extends Claim> {
+class Credential<C extends Claim> with JsonSerializable {
   String id;
   Meta meta;
   bool multiple;
@@ -50,5 +51,11 @@ class Credential<C extends Claim> {
   Credential<C> removeClaimSet(List<String> ids) {
     claimSets.removeWhere((claimSet) => claimSet == ids);
     return this;
+  }
+  
+  @override
+  Map<String, dynamic> toJson() {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }

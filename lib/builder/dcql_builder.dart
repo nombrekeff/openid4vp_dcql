@@ -1,3 +1,5 @@
+import 'package:openid4vp_dcql/builder/credential_builder.dart';
+import 'package:openid4vp_dcql/builder/credential_set_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/claims.dart';
 import 'package:openid4vp_dcql/credential.dart';
@@ -11,6 +13,8 @@ import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
 class DcqlBuilder {
   late final DcqlQuery _query;
   late final DcqlBuilder _dcqlBuilder;
+
+  get query => _query;
 
   DcqlBuilder([DcqlQuery? query]) {
     _query = query ?? DcqlQuery();
@@ -45,68 +49,6 @@ class DcqlBuilder {
   }
 
   DcqlBuilder get $_ => this;
-}
-
-class DcqlCredentialBuilder extends DcqlBuilder {
-  late final DcqlCredentialBuilder _credentialBuilder;
-  final Credential _credential;
-
-  DcqlCredentialBuilder(DcqlBuilder parent, this._credential) : super(parent._query) {
-    _credentialBuilder = this;
-  }
-
-  DcqlCredentialBuilder claim(Claim claim, {String? id}) {
-    _credential.addClaim(claim);
-
-    return _credentialBuilder;
-  }
-
-  /// https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-set-query
-  DcqlCredentialBuilder claimSet(List<String> ids) {
-    _credential.addClaimSet(ids);
-    return _credentialBuilder;
-  }
-
-  DcqlCredentialBuilder mdoc_dl() {
-    _credential.format = Format.mdoc;
-    _credential.meta.setFilter(DocType.mDocMobileDrivingLicense);
-    // TODO: Add validator to ensure correct format?
-
-    return _credentialBuilder;
-  }
-
-  DcqlCredentialBuilder sdjwt_pid() {
-    _credential.format = Format.jwt;
-    _credential.meta.setFilter(DocType.pidEuOfficial);
-    // TODO: Add validator to ensure correct format?
-
-    return _credentialBuilder;
-  }
-
-  @override
-  DcqlCredentialBuilder get $_ => this;
-}
-
-class DcqlCredentialSetBuilder extends DcqlBuilder {
-  late final DcqlCredentialSetBuilder _credentialSetBuilder;
-  final CredentialSet _credentialSet;
-
-  DcqlCredentialSetBuilder(DcqlBuilder parent, this._credentialSet) : super(parent._query) {
-    _credentialSetBuilder = this;
-  }
-
-  DcqlCredentialSetBuilder option(List<String> option) {
-    _credentialSet.options.add(option);
-    return _credentialSetBuilder;
-  }
-
-  DcqlCredentialSetBuilder required([bool required = true]) {
-    _credentialSet.required = required;
-    return _credentialSetBuilder;
-  }
-
-  @override
-  DcqlCredentialSetBuilder get $_ => this;
 }
 
 void main() {

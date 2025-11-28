@@ -1,5 +1,7 @@
-class Meta {
-  Map<String, dynamic> _meta;
+import 'package:openid4vp_dcql/json.dart';
+
+class Meta with JsonSerializable {
+  final Map<String, dynamic> _meta;
 
   Meta({Map<String, dynamic>? meta}) : _meta = meta ?? {};
 
@@ -23,4 +25,10 @@ class Meta {
   }
 
   Map<String, dynamic> toMap() => _meta;
+
+  @override
+  Map<String, dynamic> toJson() {
+    // TODO: implement toJson
+    throw UnimplementedError();
+  }
 }
