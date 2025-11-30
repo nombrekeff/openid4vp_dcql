@@ -1,5 +1,6 @@
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/json.dart';
 import 'package:openid4vp_dcql/meta.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
@@ -21,10 +22,10 @@ class Credential<C extends Claim> with JsonSerializable {
   List<TrustedAuthority>? trustedAuthorities;
   bool? requireCryptographicHolderBinding;
 
-  /// Format defaults to [Format.sd_jwt]
+  /// Format defaults to [Formats.sd_jwt]
   Credential({
     required this.id,
-    this.format = Format.sd_jwt,
+    this.format = Formats.sd_jwt,
     this.claimSets,
     this.multiple,
     Meta? meta,
@@ -74,9 +75,9 @@ class Credential<C extends Claim> with JsonSerializable {
   static Credential fromJson(Map<String, dynamic> c) {
     return Credential(
       id: c['id'] as String,
-      format: Format.values.firstWhere(
+      format: Formats.values.firstWhere(
         (f) => f.name == (c['format'] as String),
-        orElse: () => Format.sd_jwt,
+        orElse: () => Formats.sd_jwt,
       ),
       meta: Meta.fromJson(c['meta'] as Map<String, dynamic>),
       multiple: c['multiple'] as bool?,

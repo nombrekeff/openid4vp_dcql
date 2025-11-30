@@ -1,8 +1,8 @@
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:test/test.dart';
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/impl/claims.dart';
 import 'package:openid4vp_dcql/enum/claicredential_type.dart';
-import 'package:openid4vp_dcql/enum/format.dart';
 
 void main() {
   group('DcqlBuilder', () {
@@ -28,9 +28,9 @@ void main() {
 
       test('credential() with format sets the format', () {
         final query = builder
-            .credential('cred-1', format: Format.mdoc)
+            .credential('cred-1', format: Formats.mdoc)
             .build();
-        expect(query.credentials.first.format, equals(Format.mdoc));
+        expect(query.credentials.first.format, equals(Formats.mdoc));
       });
 
       test('credential() with CredentialType sets format and docType', () {
@@ -39,7 +39,7 @@ void main() {
             .build();
         
         final cred = query.credentials.first;
-        expect(cred.format, equals(Format.mdoc));
+        expect(cred.format, equals(Formats.mdoc));
         // We can't easily check the meta filter without exposing it or checking the meta object directly
         // Assuming meta is set correctly if format is correct for now, or we could check if we can access meta
         expect(cred.meta, isNotNull);
@@ -75,7 +75,7 @@ void main() {
             .mdoc_dl()
             .build();
         
-        expect(query.credentials.first.format, equals(Format.mdoc));
+        expect(query.credentials.first.format, equals(Formats.mdoc));
       });
 
       test('sdjwt_pid() helper sets format', () {
@@ -84,7 +84,7 @@ void main() {
             .sdjwt_pid()
             .build();
         
-        expect(query.credentials.first.format, equals(Format.jwt));
+        expect(query.credentials.first.format, equals(Formats.jwt));
       });
     });
 

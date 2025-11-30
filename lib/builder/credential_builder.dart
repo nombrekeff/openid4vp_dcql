@@ -2,8 +2,8 @@ import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/credential.dart';
 import 'package:openid4vp_dcql/enum/doc_type.dart';
-import 'package:openid4vp_dcql/enum/format.dart';
 import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
 
 class DcqlCredentialBuilder extends DcqlBuilder {
@@ -57,17 +57,15 @@ class DcqlCredentialBuilder extends DcqlBuilder {
   }
 
   DcqlCredentialBuilder mdoc_dl() {
-    _credential.format = Format.mdoc;
+    _credential.format = Formats.mdoc;
     _credential.meta.setFilter(DocType.mDocMobileDrivingLicense);
-    // TODO: Add validator to ensure correct format?
 
     return _credentialBuilder;
   }
 
   DcqlCredentialBuilder sdjwt_pid() {
-    _credential.format = Format.jwt;
+    _credential.format = Formats.jwt;
     _credential.meta.setFilter(DocType.pidEuOfficial);
-    // TODO: Add validator to ensure correct format?
 
     return _credentialBuilder;
   }

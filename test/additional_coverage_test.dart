@@ -1,3 +1,4 @@
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 import 'package:test/test.dart';
 
@@ -5,7 +6,7 @@ void main() {
   group('DcqlQuery', () {
     test('toJson and fromJson work correctly', () {
       final query = DcqlQuery()
-        ..addCredential(Credential(id: 'c1', format: Format.mdoc))
+        ..addCredential(Credential(id: 'c1', format: Formats.mdoc))
         ..addCredentialSet(
           CredentialSet(
             options: [
@@ -62,7 +63,7 @@ void main() {
     test('toJson and fromJson work correctly', () {
       final credential = Credential(
         id: 'c1',
-        format: Format.mdoc,
+        format: Formats.mdoc,
         multiple: true,
         meta: Meta()..set('doctype_value', 'org.iso.18013.5.1.mDL'),
         claims: [
@@ -83,7 +84,7 @@ void main() {
 
       final fromJson = Credential.fromJson(json);
       expect(fromJson.id, 'c1');
-      expect(fromJson.format, Format.mdoc);
+      expect(fromJson.format, Formats.mdoc);
       expect(fromJson.multiple, true);
       expect(fromJson.meta.toJson(), equals(credential.meta.toJson()));
       expect(fromJson.claims, hasLength(1));
@@ -266,20 +267,20 @@ void main() {
 
   group('Format enum', () {
     test('toString works correctly', () {
-      expect(Format.mdoc.toString(), 'mso_mdoc');
-      expect(Format.sd_jwt.toString(), 'dc+sd-jwt');
+      expect(Formats.mdoc.toString(), 'mso_mdoc');
+      expect(Formats.sd_jwt.toString(), 'dc+sd-jwt');
     });
 
     test('toJson works correctly', () {
-      expect(Format.mdoc.toJson(), 'mso_mdoc');
-      expect(Format.sd_jwt.toJson(), 'dc+sd-jwt');
+      expect(Formats.mdoc.toJson(), 'mso_mdoc');
+      expect(Formats.sd_jwt.toJson(), 'dc+sd-jwt');
     });
   });
 
   group('CredentialType enum', () {
     test('format works correctly', () {
-      expect(CredentialType.mdocDl.format, Format.mdoc);
-      expect(CredentialType.sdJwtPid.format, Format.jwt);
+      expect(CredentialType.mdocDl.format, Formats.mdoc);
+      expect(CredentialType.sdJwtPid.format, Formats.jwt);
     });
 
     test('docType works correctly', () {

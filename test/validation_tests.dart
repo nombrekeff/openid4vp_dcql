@@ -2,7 +2,7 @@ import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/credential.dart';
 import 'package:openid4vp_dcql/credential_set.dart';
 import 'package:openid4vp_dcql/dcql_query.dart';
-import 'package:openid4vp_dcql/enum/format.dart';
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/validation/dcql_validator.dart';
 import 'package:test/test.dart';
 
@@ -11,7 +11,7 @@ void main() {
 
   group('DCQL Validation', () {
     test('Valid simple query passes', () {
-      final query = DcqlQuery()..credentials.add(Credential(id: 'c1', format: Format.mdoc));
+      final query = DcqlQuery()..credentials.add(Credential(id: 'c1', format: Formats.mdoc));
 
       final result = validator.validate(query);
       expect(result.isValid, isTrue);
@@ -28,7 +28,7 @@ void main() {
 
     test('Fails if credential ID is invalid', () {
       final query = DcqlQuery()
-        ..credentials.add(Credential(id: '', format: Format.mdoc)); // Empty ID
+        ..credentials.add(Credential(id: '', format: Formats.mdoc)); // Empty ID
 
       final result = validator.validate(query);
       expect(result.isValid, isFalse);
@@ -42,8 +42,8 @@ void main() {
     test('Fails if duplicate credential IDs exist', () {
       final query = DcqlQuery()
         ..credentials.addAll([
-          Credential(id: 'c1', format: Format.mdoc),
-          Credential(id: 'c1', format: Format.jwt),
+          Credential(id: 'c1', format: Formats.mdoc),
+          Credential(id: 'c1', format: Formats.jwt),
         ]);
 
       final result = validator.validate(query);
@@ -63,7 +63,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(id: 'invalid id!', path: ['path']),
               ],
@@ -81,7 +81,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(id: 'claim1', path: ['path1']),
                 Claim(id: 'claim1', path: ['path2']),
@@ -100,7 +100,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(path: ['path'], values: [1.5]), // Double is not allowed
               ],
@@ -118,7 +118,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(path: ['path'], values: []), // Empty values list
               ],
@@ -136,7 +136,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(path: ['path', 1.5]), // Double is not allowed in path
               ],
@@ -156,7 +156,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(path: ['path']), // Missing ID
               ],
@@ -180,7 +180,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(path: ['path']), // Missing ID, but okay
               ],
@@ -197,7 +197,7 @@ void main() {
           ..credentials.add(
             Credential(
               id: 'c1',
-              format: Format.mdoc,
+              format: Formats.mdoc,
               claims: [
                 Claim(id: 'claim1', path: ['path']),
               ],
@@ -220,7 +220,7 @@ void main() {
     group('Credential Sets Logic', () {
       test('Fails if credential_sets options is empty', () {
         final query = DcqlQuery()
-          ..credentials.add(Credential(id: 'c1', format: Format.mdoc))
+          ..credentials.add(Credential(id: 'c1', format: Formats.mdoc))
           ..credentialSets = [CredentialSet(options: [])];
 
         final result = validator.validate(query);
@@ -231,7 +231,7 @@ void main() {
 
       test('Fails if credential_sets option is empty', () {
         final query = DcqlQuery()
-          ..credentials.add(Credential(id: 'c1', format: Format.mdoc))
+          ..credentials.add(Credential(id: 'c1', format: Formats.mdoc))
           ..credentialSets = [
             CredentialSet(options: [[]]),
           ];
@@ -244,7 +244,7 @@ void main() {
 
       test('Fails if credential set references unknown credential ID', () {
         final query = DcqlQuery()
-          ..credentials.add(Credential(id: 'c1', format: Format.mdoc))
+          ..credentials.add(Credential(id: 'c1', format: Formats.mdoc))
           ..credentialSets = [
             CredentialSet(options: [['c1'], ['unknown_c']]),
           ];
