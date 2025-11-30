@@ -1,4 +1,5 @@
 import 'package:openid4vp_dcql/impl/credential_types.dart';
+import 'package:openid4vp_dcql/impl/doc_types.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 import 'package:test/test.dart';
@@ -164,8 +165,8 @@ void main() {
 
     test('setFilter sets doc_type', () {
       final meta = Meta();
-      meta.setFilter('doctype');
-      expect(meta.toJson()['doc_type'], 'doctype');
+      meta.setFilter(DocTypes.pidDe);
+      expect(meta.toJson()['doc_type'], 'urn:eudi:pid:de:1');
     });
 
     test('set sets key-value pair', () {
@@ -285,8 +286,8 @@ void main() {
     });
 
     test('docType works correctly', () {
-      expect(CredentialTypes.mdocDl.docType, 'org.iso.18013.5.1.mDL');
-      expect(CredentialTypes.sdJwtPid.docType, 'urn:eu.europa.ec.eudi.pid.1');
+      expect(CredentialTypes.mdocDl.docType.id, 'org.iso.18013.5.1.mDL');
+      expect(CredentialTypes.sdJwtPid.docType.id, 'urn:eu.europa.ec.eudi.pid.1');
     });
 
     test('toJson works correctly', () {

@@ -1,9 +1,9 @@
-import 'package:openid4vp_dcql/enum/format.dart';
-import 'package:openid4vp_dcql/json.dart';
+import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 
+/// Class for holding format / doctype relationships
 class CredentialType with JsonSerializable {
   final Format format;
-  final String docType;
+  final DocType docType;
 
   const CredentialType({required this.format, required this.docType});
 
@@ -14,6 +14,6 @@ class CredentialType with JsonSerializable {
 
   @override
   toJson() {
-    return {'format': format.name, 'doc_type': docType};
+    return {'format': format.name, 'doc_type': docType.id};
   }
 }

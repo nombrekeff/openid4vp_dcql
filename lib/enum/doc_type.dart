@@ -11,33 +11,15 @@
 // - ISO/IEC 18013-5:2021 (mDoc)
 // - EUDI Wallet Architecture and Reference Framework
 // - IETF Draft for Selective Disclosure JWT VC
-class DocType {
-  // ==========================================
-  // OFFICIAL STANDARDS (EC ARF / ISO)
-  // ==========================================
+import 'package:openid4vp_dcql/json.dart';
 
-  // ISO mDoc
-  /// https://credentials.walt.id/iso-mdoc-credentials/mdl-mobile-driving-licence
-  static const mDocMobileDrivingLicense = 'org.iso.18013.5.1.mDL';
+class DocType with JsonSerializable {
+  final String id;
+  const DocType(this.id);
 
-  /// https://credentials.walt.id/iso-mdoc-credentials/mvrc-mobile-vehicle-registration
-  static const mDocMobileVehicleRegistration = 'org.iso.7367.1.mVRC';
+  @override
+  String toString() => id;
 
-  // EUDI ARF (The "Long" Form)
-  static const pidEuOfficial = 'urn:eu.europa.ec.eudi.pid.1';
-  static const ageOver18 = 'urn:eu.europa.ec.eudi.pseudonym.age_over_18.1';
-
-  // ==========================================
-  // PILOT / IMPLEMENTATION VARIANTS
-  // ==========================================
-
-  /// The shortened PID VCT used in many reference implementations and pilots.
-  /// (This matches your working example)
-  static const pidPilot = 'urn:eudi:pid:1';
-
-  /// Common variation seen in German pilots
-  static const pidDe = 'urn:eudi:pid:de:1';
-
-  /// Common variation seen in Dutch pilots
-  static const pidNl = 'nl.rdw.mech.1';
+  @override
+  Map<String, dynamic> toJson() => {'doc_type': id};
 }
