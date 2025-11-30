@@ -1,3 +1,4 @@
+import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 import 'package:test/test.dart';
@@ -279,29 +280,29 @@ void main() {
 
   group('CredentialType enum', () {
     test('format works correctly', () {
-      expect(CredentialType.mdocDl.format, Formats.mdoc);
-      expect(CredentialType.sdJwtPid.format, Formats.jwt);
+      expect(CredentialTypes.mdocDl.format, Formats.mdoc);
+      expect(CredentialTypes.sdJwtPid.format, Formats.jwt);
     });
 
     test('docType works correctly', () {
-      expect(CredentialType.mdocDl.docType, 'org.iso.18013.5.1.mDL');
-      expect(CredentialType.sdJwtPid.docType, 'urn:eu.europa.ec.eudi.pid.1');
+      expect(CredentialTypes.mdocDl.docType, 'org.iso.18013.5.1.mDL');
+      expect(CredentialTypes.sdJwtPid.docType, 'urn:eu.europa.ec.eudi.pid.1');
     });
 
     test('toJson works correctly', () {
-      expect(CredentialType.mdocDl.toJson(), {
+      expect(CredentialTypes.mdocDl.toJson(), {
         'format': 'mso_mdoc',
         'doc_type': 'org.iso.18013.5.1.mDL',
       });
-      expect(CredentialType.sdJwtPid.toJson(), {
+      expect(CredentialTypes.sdJwtPid.toJson(), {
         'format': 'dc+sd-jwt',
         'doc_type': 'urn:eu.europa.ec.eudi.pid.1',
       });
     });
 
     test('toString', () {
-      expect(CredentialType.mdocDl.toString(), 'CredentialType(format: mso_mdoc, docType: org.iso.18013.5.1.mDL)');
-      expect(CredentialType.sdJwtPid.toString(), 'CredentialType(format: dc+sd-jwt, docType: urn:eu.europa.ec.eudi.pid.1)');
+      expect(CredentialTypes.mdocDl.toString(), 'CredentialType(format: mso_mdoc, docType: org.iso.18013.5.1.mDL)');
+      expect(CredentialTypes.sdJwtPid.toString(), 'CredentialType(format: dc+sd-jwt, docType: urn:eu.europa.ec.eudi.pid.1)');
     });
   });
 }

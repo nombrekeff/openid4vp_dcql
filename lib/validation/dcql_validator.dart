@@ -240,14 +240,6 @@ class CredentialsValidator {
       }
       credentialIds.add(credential.id);
 
-      // ignore: unnecessary_null_comparison
-      if (credential.format == null) {
-        return ValidationResult.invalid(
-          contextPath: '$contextPath.format',
-          errors: ['Credential format cannot be null.'],
-        );
-      }
-
       final claimValidationResult = _claimValidator.validate(
         credential: credential,
         query: query,

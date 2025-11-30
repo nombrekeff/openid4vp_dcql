@@ -1,8 +1,8 @@
+import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:test/test.dart';
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/impl/claims.dart';
-import 'package:openid4vp_dcql/enum/claicredential_type.dart';
 
 void main() {
   group('DcqlBuilder', () {
@@ -35,7 +35,7 @@ void main() {
 
       test('credential() with CredentialType sets format and docType', () {
         final query = builder
-            .credential('cred-1', type: CredentialType.mdocDl)
+            .credential('cred-1', type: CredentialTypes.mdocDl)
             .build();
         
         final cred = query.credentials.first;

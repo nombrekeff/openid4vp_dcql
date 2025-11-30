@@ -1,9 +1,9 @@
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/credential.dart';
-import 'package:openid4vp_dcql/enum/doc_type.dart';
+import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
-import 'package:openid4vp_dcql/impl/formats.dart';
+import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
 
 class DcqlCredentialBuilder extends DcqlBuilder {
@@ -56,17 +56,25 @@ class DcqlCredentialBuilder extends DcqlBuilder {
     return _credentialBuilder;
   }
 
-  DcqlCredentialBuilder mdoc_dl() {
-    _credential.format = Formats.mdoc;
-    _credential.meta.setFilter(DocType.mDocMobileDrivingLicense);
+  DcqlCredentialBuilder setCredential(CredentialType credentialType) {
+    _credential.format = credentialType.format;
+    _credential.meta.setFilter(credentialType.docType);
 
     return _credentialBuilder;
   }
 
-  DcqlCredentialBuilder sdjwt_pid() {
-    _credential.format = Formats.jwt;
-    _credential.meta.setFilter(DocType.pidEuOfficial);
+  DcqlCredentialBuilder mdoc_dl() {
+    setCredential(CredentialTypes.mdocDl);
+    return _credentialBuilder;
+  }
 
+  DcqlCredentialBuilder sdjwt_pid() {
+    setCredential(CredentialTypes.sdJwtPid);
+    return _credentialBuilder;
+  }
+
+  DcqlCredentialBuilder mdoc_mvrc() {
+    setCredential(CredentialTypes.mdocMvrc);
     return _credentialBuilder;
   }
 

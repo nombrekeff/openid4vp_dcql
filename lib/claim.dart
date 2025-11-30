@@ -15,7 +15,7 @@ class Claim with JsonSerializable {
       'Claim path elements must be String, int, or null',
     );
     assert(
-      values == null || values!.every((e) => e is String || e is int || e is bool || e == null),
+      values == null || values!.every((e) => e is String || e is int || e is bool),
       'Claim values must be String, int, bool, or null',
     );
   }

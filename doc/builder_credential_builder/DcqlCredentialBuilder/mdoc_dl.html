@@ -67,10 +67,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">DcqlCredentialBuilder mdoc_dl() {
-  _credential.format = Format.mdoc;
-  _credential.meta.setFilter(DocType.mDocMobileDrivingLicense);
-  &#47;&#47; TODO: Add validator to ensure correct format?
-
+  setCredential(CredentialTypes.mdocDl);
   return _credentialBuilder;
 }</code></pre>
 </section>

@@ -1,3 +1,4 @@
+import 'package:openid4vp_dcql/constants.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 
 abstract class Formats {
@@ -5,9 +6,9 @@ abstract class Formats {
   static const values = [sd_jwt, mso_mdoc, w3c];
 
   // DCQL format values
-  static const sd_jwt = Format('dc+sd-jwt');
-  static const mso_mdoc = Format('mso_mdoc');
-  static const w3c = Format('jwt_vc_json');
+  static const sd_jwt = Format(DcqlConstants.dc_sd_jwt);
+  static const mso_mdoc = Format(DcqlConstants.mso_mdoc);
+  static const w3c = Format(DcqlConstants.w3c_vc_json);
 
   /// Alias for [Format.mso_mdoc]
   static const mdoc = mso_mdoc;

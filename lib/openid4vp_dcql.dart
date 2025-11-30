@@ -4,7 +4,7 @@ export 'impl/claims.dart';
 export 'credential.dart';
 export 'credential_set.dart';
 export 'dcql_query.dart';
-export 'enum/claicredential_type.dart';
+export 'enum/credential_type.dart';
 export 'enum/doc_type.dart';
 export 'enum/format.dart';
 export 'extensions/mdoc_meta.extension.dart';

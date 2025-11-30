@@ -67,10 +67,7 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">DcqlCredentialBuilder sdjwt_pid() {
-  _credential.format = Format.jwt;
-  _credential.meta.setFilter(DocType.pidEuOfficial);
-  &#47;&#47; TODO: Add validator to ensure correct format?
-
+  setCredential(CredentialTypes.sdJwtPid);
   return _credentialBuilder;
 }</code></pre>
 </section>
