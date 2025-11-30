@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/impl/claims.dart';
-import 'package:openid4vp_dcql/enum/claim_type.dart';
+import 'package:openid4vp_dcql/enum/claicredential_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 
 void main() {
@@ -16,7 +16,7 @@ void main() {
       final query = builder.build();
       expect(query, isNotNull);
       expect(query.credentials, isEmpty);
-      expect(query.credentialSets, isEmpty);
+      expect(query.credentialSets, isNull);
     });
 
     group('Credential Building', () {
@@ -60,6 +60,8 @@ void main() {
         final claimSetIds = ['claim-1', 'claim-2'];
         final query = builder
             .credential('cred-1')
+            .claim(Claims.mdocDl.firstName, id: 'claim-1')
+            .claim(Claims.mdocDl.familyName, id: 'claim-2')
             .claimSet(claimSetIds)
             .build();
 
@@ -155,7 +157,7 @@ void main() {
         
         expect(query.credentials, hasLength(2));
         expect(query.credentials[0].claims, hasLength(1));
-        expect(query.credentials[1].claims, isEmpty);
+        expect(query.credentials[1].claims, isNull);
       });
     });
   });

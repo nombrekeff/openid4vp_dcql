@@ -24,6 +24,11 @@ class CredentialType with JsonSerializable {
   );
 
   @override
+  String toString() {
+    return 'CredentialType(format: ${format.name}, docType: $docType)';
+  }
+
+  @override
   toJson() {
     return {'format': format.name, 'doc_type': docType};
   }

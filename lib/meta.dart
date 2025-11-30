@@ -5,7 +5,7 @@ class Meta with JsonSerializable {
 
   Meta({Map<String, dynamic>? meta}) : _meta = meta ?? {};
 
-  Meta get(String key) {
+  dynamic get(String key) {
     return _meta[key];
   }
 

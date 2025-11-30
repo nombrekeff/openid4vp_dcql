@@ -10,4 +10,11 @@ class TrustedAuthority with JsonSerializable {
 
   @override
   Map<String, dynamic> toJson() => {'type': type, 'values': values};
+
+  static TrustedAuthority fromJson(Map<String, dynamic> json) {
+    return TrustedAuthority(
+      type: json['type'] as String,
+      values: (json['values'] as List<dynamic>).cast<String>(),
+    );
+  }
 }

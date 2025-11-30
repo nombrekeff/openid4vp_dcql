@@ -3,7 +3,7 @@ import 'package:openid4vp_dcql/builder/credential_set_builder.dart';
 import 'package:openid4vp_dcql/credential.dart';
 import 'package:openid4vp_dcql/credential_set.dart';
 import 'package:openid4vp_dcql/dcql_query.dart';
-import 'package:openid4vp_dcql/enum/claim_type.dart';
+import 'package:openid4vp_dcql/enum/claicredential_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
 
@@ -36,7 +36,8 @@ class DcqlBuilder {
 
   DcqlCredentialSetBuilder credentialSet({bool? required, List<List<String>>? options}) {
     final credentialSet = CredentialSet(required: required, options: options ?? []);
-    _query.credentialSets?.add(credentialSet);
+    _query.credentialSets ??= [];
+    _query.credentialSets!.add(credentialSet);
 
     return DcqlCredentialSetBuilder(_dcqlBuilder, credentialSet);
   }
