@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
-import 'package:openid4vp_dcql/claims.dart';
+import 'package:openid4vp_dcql/impl/claims.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 
 /// Example 3: Complex query with options

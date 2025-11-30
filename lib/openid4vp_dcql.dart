@@ -1,6 +1,6 @@
 export 'builder/dcql_builder.dart';
 export 'claim.dart';
-export 'claims.dart';
+export 'impl/claims.dart';
 export 'credential.dart';
 export 'credential_set.dart';
 export 'dcql_query.dart';

@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:openid4vp_dcql/claims.dart';
+import 'package:openid4vp_dcql/impl/claims.dart';
 
 void main() {
   group('Claims Structure and Paths', () {

@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
-import 'package:openid4vp_dcql/claims.dart';
+import 'package:openid4vp_dcql/impl/claims.dart';
 import 'package:openid4vp_dcql/enum/claim_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 
@@ -53,7 +53,7 @@ void main() {
             .build();
 
         expect(query.credentials.first.claims, hasLength(1));
-        expect(query.credentials.first.claims.first, equals(claim));
+        expect(query.credentials.first.claims?.first, equals(claim));
       });
 
       test('claimSet() adds a claim set to the credential', () {
