@@ -1,5 +1,4 @@
 import 'package:openid4vp_dcql/enum/credential_type.dart';
-import 'package:openid4vp_dcql/enum/doc_type.dart';
 import 'package:openid4vp_dcql/impl/doc_types.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 
