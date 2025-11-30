@@ -10,4 +10,13 @@ class CredentialSet with JsonSerializable {
   Map<String, dynamic> toJson() {
     return {'options': options, if (required != null) 'required': required};
   }
+
+  static CredentialSet fromJson(Map<String, dynamic> cs) {
+    return CredentialSet(
+      options: (cs['options'] as List<dynamic>)
+          .map((option) => (option as List<dynamic>).map((e) => e as String).toList())
+          .toList(),
+      required: cs['required'] as bool?,
+    );
+  }
 }

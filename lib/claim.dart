@@ -14,28 +14,10 @@ class Claim with JsonSerializable {
       path.every((e) => e is String || e is int || e == null),
       'Claim path elements must be String, int, or null',
     );
-
-    _validateValues(values);
-  }
-
-  // TODO: Move this to a validator class?
-  void _validateValues(List<Object>? v) {
-    if (v == null) return;
-    if (v.isEmpty) {
-      throw ArgumentError('Claim values cannot be an empty list if provided.');
-    }
-
-    for (final element in v) {
-      // The spec says: strings, integers, or booleans.
-      final isValid = element is String || element is int || element is bool;
-
-      if (!isValid) {
-        throw ArgumentError(
-          'Invalid claim value type: ${element.runtimeType}. '
-          'DCQL only supports String, int, and bool.',
-        );
-      }
-    }
+    assert(
+      values == null || values!.every((e) => e is String || e is int || e is bool || e == null),
+      'Claim values must be String, int, bool, or null',
+    );
   }
 
   Claim copyWith({String? id, List<Object>? values}) {
@@ -45,5 +27,13 @@ class Claim with JsonSerializable {
   @override
   Map<String, dynamic> toJson() {
     return {if (id != null) 'id': id, 'path': path, if (values != null) 'values': values};
+  }
+
+  static Claim fromJson(Map<String, dynamic> claim) {
+    return Claim(
+      id: claim['id'] as String?,
+      path: (claim['path'] as List<dynamic>),
+      values: (claim['values'] as List<dynamic>?)?.cast<Object>(),
+    );
   }
 }

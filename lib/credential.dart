@@ -28,9 +28,8 @@ class Credential<C extends Claim> with JsonSerializable {
     this.claimSets,
     this.multiple,
     Meta? meta,
-    List<C>? claims,
-  }) : meta = meta ?? Meta(),
-       claims = claims;
+    this.claims,
+  }) : meta = meta ?? Meta();
 
   /// Adds a claim to the credential and returns the updated credential.
   Credential<C> addClaim(C claim) {
@@ -70,5 +69,24 @@ class Credential<C extends Claim> with JsonSerializable {
       if (multiple != null) 'multiple': multiple,
       if (claimSets != null) 'claimSets': claimSets,
     };
+  }
+
+  static Credential fromJson(Map<String, dynamic> c) {
+    return Credential(
+      id: c['id'] as String,
+      format: Format.values.firstWhere(
+        (f) => f.name == (c['format'] as String),
+        orElse: () => Format.sd_jwt,
+      ),
+      meta: Meta.fromJson(c['meta'] as Map<String, dynamic>),
+      multiple: c['multiple'] as bool?,
+      claims:
+          (c['claims'] as List<dynamic>?)
+                  ?.map((claim) => Claim.fromJson(claim as Map<String, dynamic>))
+                  .toList(),
+      claimSets: (c['claimSets'] as List<dynamic>?)
+          ?.map((cs) => (cs as List<dynamic>).map((id) => id as String).toList())
+          .toList(),
+    );
   }
 }

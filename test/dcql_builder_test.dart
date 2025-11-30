@@ -94,7 +94,7 @@ void main() {
 
       test('credentialSet() with required flag', () {
         final query = builder.credentialSet(required: false).build();
-        expect(query.credentialSets.first.required, isFalse);
+        expect(query.credentialSets?.first.required, isFalse);
       });
 
       test('option() adds options to credential set', () {
@@ -104,10 +104,10 @@ void main() {
             .option(['cred-2', 'cred-3'])
             .build();
 
-        final set = query.credentialSets.first;
-        expect(set.options, hasLength(2));
-        expect(set.options[0], equals(['cred-1']));
-        expect(set.options[1], equals(['cred-2', 'cred-3']));
+        final set = query.credentialSets?.first;
+        expect(set?.options, hasLength(2));
+        expect(set?.options[0], equals(['cred-1']));
+        expect(set?.options[1], equals(['cred-2', 'cred-3']));
       });
 
       test('required() sets required flag', () {
@@ -116,7 +116,7 @@ void main() {
             .required(false)
             .build();
         
-        expect(query.credentialSets.first.required, isFalse);
+        expect(query.credentialSets?.first.required, isFalse);
       });
     });
 

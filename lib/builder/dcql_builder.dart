@@ -36,7 +36,7 @@ class DcqlBuilder {
 
   DcqlCredentialSetBuilder credentialSet({bool? required, List<List<String>>? options}) {
     final credentialSet = CredentialSet(required: required, options: options ?? []);
-    _query.credentialSets.add(credentialSet);
+    _query.credentialSets?.add(credentialSet);
 
     return DcqlCredentialSetBuilder(_dcqlBuilder, credentialSet);
   }

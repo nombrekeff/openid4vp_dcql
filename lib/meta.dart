@@ -30,4 +30,8 @@ class Meta with JsonSerializable {
   Map<String, dynamic> toJson() {
     return _meta;
   }
+
+  static Meta? fromJson(Map<String, dynamic> c) {
+    return Meta(meta: c);
+  }
 }
