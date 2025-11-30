@@ -1,10 +1,8 @@
 import 'package:openid4vp_dcql/claim.dart';
+import 'package:openid4vp_dcql/constants.dart';
 
-// TODO: Consider moving all constants to a separate file
-const String iso18013_5_1 = 'org.iso.18013.5.1';
-const String mdocMdl = iso18013_5_1;
-const String iso7367_1 = 'org.iso.7367.1';
-const String mdocMvrc = iso7367_1;
+const String mdocMdl = DcqlConstants.iso18013_5_1;
+const String mdocMvrc = DcqlConstants.iso7367_1;
 
 Claim mdocClaim({String? id, required String ns, required List<String> path}) {
   return Claim(id: id, path: [ns, ...path]);

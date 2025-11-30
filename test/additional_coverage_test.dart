@@ -193,7 +193,7 @@ void main() {
     test('fromJson returns Meta object', () {
       final meta = Meta.fromJson({});
       expect(meta, isNotNull);
-      expect(meta!.toMap(), isEmpty);
+      expect(meta!.toJson(), isEmpty);
     });
   });
 

@@ -1,5 +1,6 @@
 import 'package:openid4vp_dcql/enum/doc_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
+import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/json.dart';
 
 class CredentialType with JsonSerializable {
@@ -9,17 +10,17 @@ class CredentialType with JsonSerializable {
   const CredentialType({required this.format, required this.docType});
 
   static const mdocDl = CredentialType(
-    format: Format.mdoc,
+    format: Formats.mdoc,
     docType: DocType.mDocMobileDrivingLicense,
   );
 
   static const mdocMvrc = CredentialType(
-    format: Format.mdoc,
+    format: Formats.mdoc,
     docType: DocType.mDocMobileVehicleRegistration,
   );
 
   static const sdJwtPid = CredentialType(
-    format: Format.jwt,
+    format: Formats.jwt,
     docType: DocType.pidEuOfficial, // e.g., Personal Identity Document
   );
 

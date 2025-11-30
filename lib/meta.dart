@@ -24,8 +24,6 @@ class Meta with JsonSerializable {
     return this;
   }
 
-  Map<String, dynamic> toMap() => _meta;
-
   @override
   Map<String, dynamic> toJson() {
     return _meta;
