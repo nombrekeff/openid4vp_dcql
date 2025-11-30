@@ -1,14 +1,14 @@
 name: openid4vp_dcql
-description: A sample command-line application.
+description: A Dart library for building DCQL queries for OpenID4VP.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/nombrekeff/openid4vp_dcql
 
 environment:
   sdk: ^3.9.2
 
 # Add regular dependencies here.
-dependencies:
-  path: ^1.9.0
+# dependencies:
+#   
 
 dev_dependencies:
   lints: ^6.0.0

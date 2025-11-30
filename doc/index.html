@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="openid4vp_dcql API docs, for the Dart programming language.">
+  <title>openid4vp_dcql - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">openid4vp_dcql package</li>
+  </ol>
+  <div class="self-name">openid4vp_dcql</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="openid4vp-dcql">OpenID4VP DCQL</h1>
+<p>A Dart library for building and validating <strong>Digital Credentials Query Language (DCQL)</strong> queries as defined in the <a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query">OpenID for Verifiable Presentations (OpenID4VP) v1.0 specification</a>.</p>
+<p>Build complex credential queries with a fluent, type-safe API, validate them against the spec, and serialize them to JSON for transmission.</p>
+<h2 id="why">Why</h2>
+<ul>
+<li><strong>Fluent Builder API</strong>: Construct complex nested queries with readable, chainable methods.</li>
+<li><strong>Type Safety</strong>: Compile-time checks for known credential types (<code>mdoc</code>, <code>sd-jwt</code>) and claims.</li>
+<li><strong>Spec Compliance</strong>: Built-in validation ensures your queries meet the DCQL specification requirements.</li>
+<li><strong>Zero Boilerplate</strong>: No need to manually construct deeply nested Maps or JSON objects.</li>
+</ul>
+<h2 id="what">What</h2>
+<p>This library focuses exclusively on the <strong>Digital Credentials Query Language (DCQL)</strong> part of the OpenID4VP specification.</p>
+<p>It does <strong>not</strong> handle</p>
+<ul>
+<li>Cryptographic operations (signing, encryption, or verification of credentials).</li>
+<li>PKI or Key Management.</li>
+<li>Transport protocols (OID4VP request/response handling).</li>
+</ul>
+<p>It is designed to be used within a larger OpenID4VP implementation or by a Verifier application that needs to construct queries.</p>
+<h2 id="install">Install</h2>
+<pre class="language-bash"><code class="language-bash">dart pub add openid4vp_dcql
+</code></pre>
+<h2 id="core-example">Core Example</h2>
+<pre class="language-dart"><code class="language-dart">import 'dart:convert';
+import 'package:openid4vp_dcql/openid4vp_dcql.dart';
+
+void main() {
+  final query = DcqlBuilder()
+      // Request an mDoc Driving License
+      .credential('credential-1', type: CredentialType.mdocDl)
+          .claim(Claims.mdocDl.firstName, id: 'first_name')
+          .claim(Claims.mdocDl.documentNumber, id: 'doc_number')
+          // Define combinations of claims that satisfy the requirement
+          .claimSet(["first_name", "doc_number"])
+      
+      // Request an SD-JWT PID
+      .credential('credential-2', type: CredentialType.sdJwtPid)
+          .claim(Claims.sdJwtPid.documentNumber)
+      
+      // Define logic between credentials (e.g., Credential 1 OR Credential 2)
+      .credentialSet()
+          .option(['credential-1'])
+          .option(['credential-2'])
+      
+      .build();
+
+  // Validate the query structure
+  final validation = DcqlValidator().validate(query);
+  if (validation.isValid) {
+    print(jsonEncode(query.toJson()));
+  } else {
+    print('Invalid query: ${validation.errors}');
+  }
+}
+</code></pre>
+<h2 id="features">Features</h2>
+<h3 id="fluent-builder">Fluent Builder</h3>
+<p>The <code>DcqlBuilder</code> allows you to chain methods to define credentials, claims, and sets naturally.</p>
+<h3 id="validation">Validation</h3>
+<p>The library includes a robust validator that checks for:</p>
+<ul>
+<li>Unique IDs for credentials and claims.</li>
+<li>Valid references in <code>claim_sets</code> and <code>credential_sets</code>.</li>
+<li>Correct value types and non-empty paths.</li>
+</ul>
+<h3 id="supported-formats">Supported Formats</h3>
+<ul>
+<li><code>mso_mdoc</code> (Mobile Driving License, etc.)</li>
+<li><code>dc+sd-jwt</code> (SD-JWT VC)</li>
+<li><code>jwt_vc_json</code> (W3C Verifiable Credentials)</li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>Open an issue for discussion, then PR with tests.</p>
+<h2 id="license">License</h2>
+<p>MIT</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="credential_builder">
+  <span class="name"><a href="builder_credential_builder/">builder/credential_builder</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="credential_set_builder">
+  <span class="name"><a href="builder_credential_set_builder/">builder/credential_set_builder</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="dcql_builder">
+  <span class="name"><a href="builder_dcql_builder/">builder/dcql_builder</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="claim">
+  <span class="name"><a href="claim/">claim</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="claim_set">
+  <span class="name"><a href="claim_set/">claim_set</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="credential">
+  <span class="name"><a href="credential/">credential</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="credential_set">
+  <span class="name"><a href="credential_set/">credential_set</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="dcql_query">
+  <span class="name"><a href="dcql_query/">dcql_query</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="claicredential_type">
+  <span class="name"><a href="enum_claicredential_type/">enum/claicredential_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="doc_type">
+  <span class="name"><a href="enum_doc_type/">enum/doc_type</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="format">
+  <span class="name"><a href="enum_format/">enum/format</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="mdoc_meta.extension">
+  <span class="name"><a href="extensions_mdoc_meta.extension/">extensions/mdoc_meta.extension</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="claims">
+  <span class="name"><a href="impl_claims/">impl/claims</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="default_validation">
+  <span class="name"><a href="impl_default_validation/">impl/default_validation</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="json">
+  <span class="name"><a href="json/">json</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="meta">
+  <span class="name"><a href="meta/">meta</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="openid4vp_dcql">
+  <span class="name"><a href="openid4vp_dcql/">openid4vp_dcql</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="trusted_authorities">
+  <span class="name"><a href="trusted_authorities/">trusted_authorities</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="dcql_validator">
+  <span class="name"><a href="validation_dcql_validator/">validation/dcql_validator</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">openid4vp_dcql package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">openid4vp_dcql</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="builder_credential_builder/">builder/credential_builder</a></li>
+      <li><a href="builder_credential_set_builder/">builder/credential_set_builder</a></li>
+      <li><a href="builder_dcql_builder/">builder/dcql_builder</a></li>
+      <li><a href="claim/">claim</a></li>
+      <li><a href="claim_set/">claim_set</a></li>
+      <li><a href="credential/">credential</a></li>
+      <li><a href="credential_set/">credential_set</a></li>
+      <li><a href="dcql_query/">dcql_query</a></li>
+      <li><a href="enum_claicredential_type/">enum/claicredential_type</a></li>
+      <li><a href="enum_doc_type/">enum/doc_type</a></li>
+      <li><a href="enum_format/">enum/format</a></li>
+      <li><a href="extensions_mdoc_meta.extension/">extensions/mdoc_meta.extension</a></li>
+      <li><a href="impl_claims/">impl/claims</a></li>
+      <li><a href="impl_default_validation/">impl/default_validation</a></li>
+      <li><a href="json/">json</a></li>
+      <li><a href="meta/">meta</a></li>
+      <li><a href="openid4vp_dcql/">openid4vp_dcql</a></li>
+      <li><a href="trusted_authorities/">trusted_authorities</a></li>
+      <li><a href="validation_dcql_validator/">validation/dcql_validator</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    openid4vp_dcql
+      1.0.0
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
