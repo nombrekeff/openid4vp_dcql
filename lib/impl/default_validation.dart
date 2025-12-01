@@ -14,7 +14,7 @@ class ClaimValidator {
 
     if (credential.claims != null) {
       final seenIds = <String>{};
-      
+
       for (var j = 0; j < credential.claims!.length; j++) {
         final claim = credential.claims![j];
         final contextPath = 'query.credentials[$credentialIndex].claims[$j]';
@@ -26,16 +26,19 @@ class ClaimValidator {
               errors: ['Duplicate claim ID "${claim.id}" found'],
             );
           }
+
           seenIds.add(claim.id!);
         }
 
         final idValidationResult = validateId(credential, claim, contextPath);
         if (!idValidationResult.isValid) return idValidationResult;
 
-        final pathValidationResult = validatePath(claim.path, '$contextPath.path');
+        final pathValidationResult =
+            validatePath(claim.path, '$contextPath.path');
         if (!pathValidationResult.isValid) return pathValidationResult;
 
-        final valuesValidationResult = validateValues(claim.values, '$contextPath.values');
+        final valuesValidationResult =
+            validateValues(claim.values, '$contextPath.values');
         if (!valuesValidationResult.isValid) return valuesValidationResult;
       }
     }
