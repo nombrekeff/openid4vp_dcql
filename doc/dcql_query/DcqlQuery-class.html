@@ -55,6 +55,9 @@
     
 <section class="desc markdown">
   <p>Represents a DCQL (Digital Credentials Query Language) query.</p>
+<p>A DCQL query is used to request specific credentials and claims from a wallet.
+It consists of a list of <a href="../dcql_query/DcqlQuery/credentials.html">credentials</a> and optional <a href="../dcql_query/DcqlQuery/credentialSets.html">credentialSets</a> that define
+the logic for satisfying the query.</p>
 </section>
 
 
@@ -104,7 +107,7 @@
 
 </dt>
 <dd>
-  
+  A list of credentials to request.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -116,7 +119,7 @@
 
 </dt>
 <dd>
-  
+  A list of credential sets that define combinations of credentials that satisfy the query.
   <div class="features"><span class="feature">getter/setter pair</span></div>
 
 </dd>
@@ -162,7 +165,7 @@
 
 </dt>
 <dd>
-  
+  Adds a <code>credential</code> to the query.
   
 
 </dd>
@@ -175,7 +178,7 @@
 
 </dt>
 <dd>
-  
+  Adds a <code>credentialSet</code> to the query.
   
 
 </dd>
@@ -201,7 +204,7 @@
 
 </dt>
 <dd>
-  
+  Removes a <code>credential</code> from the query.
   
 
 </dd>
@@ -214,7 +217,7 @@
 
 </dt>
 <dd>
-  
+  Removes a <code>credentialSet</code> from the query.
   
 
 </dd>
@@ -227,7 +230,7 @@
 
 </dt>
 <dd>
-  Converts the object to a JSON-serializable map/list.
+  Converts the object to a JSON-serializable value.
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

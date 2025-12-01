@@ -53,6 +53,10 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Builds a DCQL query. Use the <a href="../builder_dcql_builder/DcqlBuilder-class.html">DcqlBuilder</a> class to build a DCQL query.
+Check the <a href="https://github.com/manoloedge/openid4vp_dcql/tree/main/example">example</a> directory for more examples.</p>
+</section>
 
 
     <section>
@@ -80,7 +84,7 @@
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="DcqlBuilder.new" class="callable">
-          <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/DcqlBuilder.html">DcqlBuilder.new</a></span><span class="signature">([<span class="parameter" id="-param-query"><span class="type-annotation"><a href="../dcql_query/DcqlQuery-class.html">DcqlQuery</a>?</span> <span class="parameter-name">query</span></span>])</span>
+          <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/DcqlBuilder.html">DcqlBuilder.new</a></span><span class="signature">({<span class="parameter" id="-param-validator"><span class="type-annotation"><a href="../impl_default_validation/DcqlValidator-class.html">DcqlValidator</a>?</span> <span class="parameter-name">validator</span>, </span><span class="parameter" id="-param-query"><span class="type-annotation"><a href="../dcql_query/DcqlQuery-class.html">DcqlQuery</a>?</span> <span class="parameter-name">query</span></span>})</span>
         </dt>
         <dd>
           
@@ -100,7 +104,7 @@
 
 </dt>
 <dd>
-  
+  Separator, returns the current builder instance.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -141,6 +145,18 @@
 
 </dd>
 
+        <dt id="validator" class="property">
+  <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/validator.html">validator</a></span>
+  <span class="signature">&#8596; <a href="../impl_default_validation/DcqlValidator-class.html">DcqlValidator</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">late</span><span class="feature">final</span></div>
+
+</dd>
+
     </dl>
   </section>
 
@@ -151,14 +167,16 @@
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="build" class="callable">
-  <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/build.html">build</a></span><span class="signature">(<wbr>)
+  <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/build.html">build</a></span><span class="signature">(<wbr>{<span class="parameter" id="build-param-skipValidation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">skipValidation</span> = <span class="default-value">false</span></span>})
     <span class="returntype parameter">&#8594; <a href="../dcql_query/DcqlQuery-class.html">DcqlQuery</a></span>
   </span>
   
 
 </dt>
 <dd>
-  
+  Builds the DCQL query.
+If <code>skipValidation</code> is false, the query will be validated before building.
+Throws a <a href="../validation_dcql_validator/ValidationException-class.html">ValidationException</a> if the query is invalid.
   
 
 </dd>
@@ -171,7 +189,7 @@
 
 </dt>
 <dd>
-  
+  Adds a new credential to the query.
   
 
 </dd>
@@ -184,7 +202,7 @@
 
 </dt>
 <dd>
-  
+  Adds a new credential set to the query.
   
 
 </dd>
@@ -212,6 +230,20 @@
 <dd class="inherited">
   A string representation of this object.
   <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="validate" class="callable">
+  <span class="name"><a href="../builder_dcql_builder/DcqlBuilder/validate.html">validate</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="../validation_dcql_validator/ValidationResult-class.html">ValidationResult</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Validates the current state of the query.
+Returns a <a href="../validation_dcql_validator/ValidationResult-class.html">ValidationResult</a> with a list of errors if invalid.
+  
 
 </dd>
 

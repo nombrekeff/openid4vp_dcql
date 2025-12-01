@@ -5,21 +5,37 @@ import 'package:openid4vp_dcql/json.dart';
 import 'package:openid4vp_dcql/meta.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
 
-/// https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query
+/// Represents a requested credential in a DCQL query.
+///
+/// See: https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query
 class Credential<C extends Claim> with JsonSerializable {
+  /// A unique identifier for this credential query.
+  ///
+  /// This ID is used to reference the credential in [CredentialSet]s.
   String id;
+
+  /// Metadata about the credential, such as the document type.
   Meta meta;
+
+  /// Whether multiple credentials matching this query can be returned.
   bool? multiple;
 
   /// The format of the credential (e.g., mdoc, sd_jwt, etc.)
   /// Defaults to [Format.sd_jwt]
   Format format;
+
+  /// A list of claims to request from the credential.
   List<C>? claims;
 
   /// A list of claim sets, where each claim set is a list of claim IDs.
+  ///
+  /// This defines which combinations of claims satisfy the requirement.
   List<List<String>>? claimSets;
 
+  /// A list of trusted authorities (issuers) for this credential.
   List<TrustedAuthority>? trustedAuthorities;
+
+  /// Whether cryptographic holder binding is required.
   bool? requireCryptographicHolderBinding;
 
   /// Format defaults to [Formats.sd_jwt]

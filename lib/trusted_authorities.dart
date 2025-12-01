@@ -1,7 +1,11 @@
 import 'package:openid4vp_dcql/json.dart';
 
+/// Defines a trusted authority (issuer) for a credential.
 class TrustedAuthority with JsonSerializable {
+  /// The type of the trusted authority (e.g., "issuer").
   final String type;
+
+  /// A list of trusted values (e.g., issuer IDs or public keys).
   final List<String> values;
 
   TrustedAuthority({required this.type, required this.values}) {

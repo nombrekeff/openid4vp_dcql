@@ -78,10 +78,21 @@
 
   for (var k = 0; k &lt; path.length; k++) {
     final pathElement = path[k];
-    if (pathElement is! String &amp;&amp; pathElement is! int &amp;&amp; pathElement != null) {
+    final isInt = pathElement is int;
+    final isString = pathElement is String;
+    final isNull = pathElement == null;
+
+    if (!isInt &amp;&amp; !isString &amp;&amp; !isNull) {
       return ValidationResult.invalid(
         contextPath: &#39;$contextPath[$k]&#39;,
-        errors: [&#39;Claim path elements must be String, int, or null.&#39;],
+        errors: [&#39;Claim path elements must be String, int (&gt;=0), or null.&#39;],
+      );
+    }
+
+    if (isInt &amp;&amp; pathElement &lt; 0) {
+      return ValidationResult.invalid(
+        contextPath: &#39;$contextPath[$k]&#39;,
+        errors: [&#39;Claim path elements must be int (&gt;=0).&#39;],
       );
     }
   }

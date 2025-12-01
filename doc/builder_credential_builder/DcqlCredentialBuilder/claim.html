@@ -63,6 +63,11 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Adds a claim to the credential.</p>
+<p><code>claim</code> is the claim to add.
+<code>id</code> is an optional identifier for the claim, overriding the one in <code>claim</code>.</p>
+</section>
 
 
     
@@ -70,8 +75,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">DcqlCredentialBuilder claim(Claim claim, {String? id}) {
   if (id != null) {
-    final newClaim = Claim(id: id, path: claim.path, values: claim.values);
-    _credential.addClaim(newClaim);
+    _credential.addClaim(claim.copyWith(id: id));
   } else {
     _credential.addClaim(claim);
   }

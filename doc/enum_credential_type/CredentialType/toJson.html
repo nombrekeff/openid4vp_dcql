@@ -67,7 +67,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Converts the object to a JSON-serializable map/list.</p>
+  <p>Converts the object to a JSON-serializable value.</p>
 </section>
 
 
@@ -76,7 +76,7 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 toJson() {
-  return {&#39;format&#39;: format.name, &#39;doc_type&#39;: docType};
+  return {&#39;format&#39;: format.name, &#39;doc_type&#39;: docType.id};
 }</code></pre>
 </section>
 

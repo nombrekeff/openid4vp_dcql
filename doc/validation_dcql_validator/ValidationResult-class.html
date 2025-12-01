@@ -53,6 +53,9 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>The result of a DCQL query validation.</p>
+</section>
 
 
 
@@ -70,13 +73,13 @@
           <span class="name"><a href="../validation_dcql_validator/ValidationResult/ValidationResult.invalid.html">ValidationResult.invalid</a></span><span class="signature">({<span class="parameter" id="invalid-param-contextPath"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contextPath</span>, </span><span class="parameter" id="invalid-param-errors"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">errors</span> = <span class="default-value">const []</span></span>})</span>
         </dt>
         <dd>
-          
+          Creates an invalid result with a list of errors.
         </dd>
         <dt id="ValidationResult.valid" class="callable">
           <span class="name"><a href="../validation_dcql_validator/ValidationResult/ValidationResult.valid.html">ValidationResult.valid</a></span><span class="signature">({<span class="parameter" id="valid-param-contextPath"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">contextPath</span>, </span><span class="parameter" id="valid-param-errors"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">errors</span> = <span class="default-value">const []</span></span>})</span>
         </dt>
         <dd>
-          
+          Creates a valid result.
         </dd>
     </dl>
   </section>
@@ -93,7 +96,7 @@
 
 </dt>
 <dd>
-  
+  The path to the invalid field (e.g., <code>query.credentials[0].id</code>).
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -105,7 +108,7 @@
 
 </dt>
 <dd>
-  
+  A list of error messages if the validation failed.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -129,7 +132,7 @@
 
 </dt>
 <dd>
-  
+  Returns <code>true</code> if the validation failed.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
@@ -141,7 +144,7 @@
 
 </dt>
 <dd>
-  
+  Returns <code>true</code> if the validation passed.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>

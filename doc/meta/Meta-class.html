@@ -53,6 +53,10 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>Defines the metadata of a DCQL request.</p>
+<p>Metadata can include information like the document type or other format-specific properties.</p>
+</section>
 
 
     <section>
@@ -72,7 +76,7 @@
         
   <dt>Available extensions</dt>
   <dd><ul class="comma-separated clazz-relationships">
-      <li><a href="../extensions_mdoc_meta.extension/MdocMetaExtension.html">MdocMetaExtension</a></li>
+      <li><a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension.html">MetaSetFilterExtension</a></li>
   </ul></dd>
         
 
@@ -139,7 +143,7 @@
 
 </dt>
 <dd>
-  
+  Clears all metadata.
   
 
 </dd>
@@ -152,7 +156,7 @@
 
 </dt>
 <dd>
-  
+  Gets a metadata value by key.
   
 
 </dd>
@@ -178,7 +182,7 @@
 
 </dt>
 <dd>
-  
+  Removes a metadata value.
   
 
 </dd>
@@ -191,13 +195,13 @@
 
 </dt>
 <dd>
-  
+  Sets a metadata value.
   
 
 </dd>
 
-        <dt id="setFilter" class="callable">
-  <span class="name"><a href="../extensions_mdoc_meta.extension/MdocMetaExtension/setFilter.html">setFilter</a></span><span class="signature">(<wbr><span class="parameter" id="setFilter-param-docType"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">docType</span></span>)
+        <dt id="setDocType" class="callable">
+  <span class="name"><a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension/setDocType.html">setDocType</a></span><span class="signature">(<wbr><span class="parameter" id="setDocType-param-docType"><span class="type-annotation"><a href="../enum_doc_type/DocType-class.html">DocType</a></span> <span class="parameter-name">docType</span></span>)
     <span class="returntype parameter">&#8594; <a href="../meta/Meta-class.html">Meta</a></span>
   </span>
   
@@ -206,7 +210,41 @@
 <dd>
       <p class="from-extension">
         <span>Available on <a href="../meta/Meta-class.html">Meta</a>,
-        provided by the <a href="../extensions_mdoc_meta.extension/MdocMetaExtension.html">MdocMetaExtension</a> extension</span>
+        provided by the <a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension.html">MetaSetFilterExtension</a> extension</span>
+      </p>
+  
+  
+
+</dd>
+
+        <dt id="setFilter" class="callable">
+  <span class="name"><a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension/setFilter.html">setFilter</a></span><span class="signature">(<wbr><span class="parameter" id="setFilter-param-type"><span class="type-annotation"><a href="../enum_credential_type/CredentialType-class.html">CredentialType</a></span> <span class="parameter-name">type</span></span>)
+    <span class="returntype parameter">&#8594; <a href="../meta/Meta-class.html">Meta</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+      <p class="from-extension">
+        <span>Available on <a href="../meta/Meta-class.html">Meta</a>,
+        provided by the <a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension.html">MetaSetFilterExtension</a> extension</span>
+      </p>
+  
+  
+
+</dd>
+
+        <dt id="setVctValues" class="callable">
+  <span class="name"><a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension/setVctValues.html">setVctValues</a></span><span class="signature">(<wbr><span class="parameter" id="setVctValues-param-vctValues"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">vctValues</span></span>)
+    <span class="returntype parameter">&#8594; <a href="../meta/Meta-class.html">Meta</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+      <p class="from-extension">
+        <span>Available on <a href="../meta/Meta-class.html">Meta</a>,
+        provided by the <a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension.html">MetaSetFilterExtension</a> extension</span>
       </p>
   
   
@@ -221,7 +259,7 @@
 
 </dt>
 <dd>
-  Converts the object to a JSON-serializable map/list.
+  Converts the object to a JSON-serializable value.
   <div class="features"><span class="feature">override</span></div>
 
 </dd>

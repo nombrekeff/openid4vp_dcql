@@ -65,18 +65,7 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Claim({this.id, required this.path, this.values}) {
-  assert(path.isNotEmpty, &#39;Claim path cannot be empty&#39;);
-  assert(values == null || values!.isNotEmpty, &#39;Claim values cannot be an empty list&#39;);
-  assert(
-    path.every((e) =&gt; e is String || e is int || e == null),
-    &#39;Claim path elements must be String, int, or null&#39;,
-  );
-  assert(
-    values == null || values!.every((e) =&gt; e is String || e is int || e is bool),
-    &#39;Claim values must be String, int, bool, or null&#39;,
-  );
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">Claim({this.id, required this.path, this.values});</code></pre>
 </section>
 
 

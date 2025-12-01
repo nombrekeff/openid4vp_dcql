@@ -55,18 +55,32 @@
     <section class="multi-line-signature">
       
 <span class="returntype"><a href="../../dcql_query/DcqlQuery-class.html">DcqlQuery</a></span>
-<span class="name ">build</span>(<wbr>)
+<span class="name ">build</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="build-param-skipValidation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">skipValidation</span> = <span class="default-value">false</span>, </span></li>
+</ol>})
 
       
 
     </section>
     
+<section class="desc markdown">
+  <p>Builds the DCQL query.
+If <code>skipValidation</code> is false, the query will be validated before building.
+Throws a <a href="../../validation_dcql_validator/ValidationException-class.html">ValidationException</a> if the query is invalid.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">DcqlQuery build() {
+  <pre class="language-dart"><code class="language-dart">DcqlQuery build({bool skipValidation = false}) {
+  if (!skipValidation) {
+    final result = validate();
+
+    if (result.isInvalid) {
+      throw ValidationException(result);
+    }
+  }
+
   return _query;
 }</code></pre>
 </section>

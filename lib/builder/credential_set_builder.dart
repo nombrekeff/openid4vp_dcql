@@ -10,11 +10,15 @@ class DcqlCredentialSetBuilder extends DcqlBuilder {
     _credentialSetBuilder = this;
   }
 
+  /// Adds an option to the credential set.
+  ///
+  /// [option] is a list of credential IDs that satisfy the requirement.
   DcqlCredentialSetBuilder option(List<String> option) {
     _credentialSet.options.add(option);
     return _credentialSetBuilder;
   }
 
+  /// Sets whether this credential set is required.
   DcqlCredentialSetBuilder required([bool required = true]) {
     _credentialSet.required = required;
     return _credentialSetBuilder;

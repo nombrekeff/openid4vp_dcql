@@ -69,21 +69,34 @@
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ValidationResult validateId(Credential credential, Claim claim, String contextPath) {
+  <pre class="language-dart"><code class="language-dart">ValidationResult validateId(
+  Credential credential,
+  Claim claim,
+  String contextPath,
+) {
   &#47;&#47; REQUIRED if claim_sets is present in the Credential Query;
   &#47;&#47; OPTIONAL otherwise. A string identifying the particular claim.
   &#47;&#47; The value MUST be a non-empty string consisting of alphanumeric, underscore (_), or hyphen (-) characters. Within the particular claims array, the same id MUST NOT be present more than once.
-  bool hasClaimSet = credential.claimSets != null &amp;&amp; credential.claimSets!.isNotEmpty;
+  bool hasClaimSet =
+      credential.claimSets != null &amp;&amp; credential.claimSets!.isNotEmpty;
 
   if (claim.id == null &amp;&amp; hasClaimSet) {
     return ValidationResult.invalid(
       contextPath: &#39;$contextPath.id&#39;,
-      errors: [&#39;Claim ID is required if &quot;claim_sets&quot; is present in the Credential.&#39;],
+      errors: [
+        &#39;Claim ID is required if &quot;claim_sets&quot; is present in the Credential.&#39;,
+      ],
     );
   }
 
-  if (claim.id != null &amp;&amp; claim.id!.isNotEmpty) {
-    &#47;&#47; If id is provided, it must be non-empty
+  if (claim.id != null) {
+    if (claim.id!.isEmpty) {
+      return ValidationResult.invalid(
+        contextPath: &#39;$contextPath.id&#39;,
+        errors: [&#39;Claim ID cannot be empty if provided.&#39;],
+      );
+    }
+
     final idPattern = RegExp(r&#39;^[a-zA-Z0-9_-]+$&#39;);
     if (!idPattern.hasMatch(claim.id!)) {
       return ValidationResult.invalid(

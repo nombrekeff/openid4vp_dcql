@@ -72,6 +72,8 @@
     return ValidationResult.valid();
   }
 
+  final validCredentialIds = query.credentials.map((c) =&gt; c.id).toSet();
+
   for (var i = 0; i &lt; query.credentialSets!.length; i++) {
     final credentialSet = query.credentialSets![i];
 
@@ -89,6 +91,18 @@
           contextPath: &#39;query.credential_sets[$i].options[$j]&#39;,
           errors: [&#39;CredentialSet option cannot be an empty list.&#39;],
         );
+      }
+
+      for (var k = 0; k &lt; option.length; k++) {
+        final credId = option[k];
+        if (!validCredentialIds.contains(credId)) {
+          return ValidationResult.invalid(
+            contextPath: &#39;query.credential_sets[$i].options[$j][$k]&#39;,
+            errors: [
+              &#39;Credential ID &quot;$credId&quot; in credential set does not match any credential in the query.&#39;,
+            ],
+          );
+        }
       }
     }
   }

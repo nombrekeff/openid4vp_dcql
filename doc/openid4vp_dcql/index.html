@@ -59,6 +59,11 @@
     </div>
 
     
+<section class="desc markdown">
+  <p>OpenID for Verifiable Presentation (DCQL) Builder library.</p>
+<p>This library provides a fluent API for building and validating Digital Credentials Query Language (DCQL) queries.</p>
+<p>See: <a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query">https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query</a></p>
+</section>
 
 
     <section class="summary offset-anchor" id="classes">
@@ -69,11 +74,27 @@
 
 </dt>
 <dd>
-  
+  Represents a claim requested from a credential.
 </dd>
 
           <dt id="Claims">
   <span class="name "><a href="../impl_claims/Claims-class.html">Claims</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="ClaimSetValidator">
+  <span class="name "><a href="../impl_default_validation/ClaimSetValidator-class.html">ClaimSetValidator</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="ClaimValidator">
+  <span class="name "><a href="../impl_default_validation/ClaimValidator-class.html">ClaimValidator</a></span> 
 
 </dt>
 <dd>
@@ -85,11 +106,27 @@
 
 </dt>
 <dd>
-  <a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query">https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query</a>
+  Represents a requested credential in a DCQL query.
 </dd>
 
           <dt id="CredentialSet">
   <span class="name "><a href="../credential_set/CredentialSet-class.html">CredentialSet</a></span> 
+
+</dt>
+<dd>
+  Defines a set of credentials that satisfy a query requirement.
+</dd>
+
+          <dt id="CredentialSetValidator">
+  <span class="name "><a href="../impl_default_validation/CredentialSetValidator-class.html">CredentialSetValidator</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="CredentialsValidator">
+  <span class="name "><a href="../impl_default_validation/CredentialsValidator-class.html">CredentialsValidator</a></span> 
 
 </dt>
 <dd>
@@ -101,6 +138,14 @@
 
 </dt>
 <dd>
+  Class for holding format / doctype relationships
+</dd>
+
+          <dt id="CredentialTypes">
+  <span class="name "><a href="../impl_credential_types/CredentialTypes-class.html">CredentialTypes</a></span> 
+
+</dt>
+<dd>
   
 </dd>
 
@@ -109,7 +154,8 @@
 
 </dt>
 <dd>
-  
+  Builds a DCQL query. Use the <a href="../builder_dcql_builder/DcqlBuilder-class.html">DcqlBuilder</a> class to build a DCQL query.
+Check the <a href="https://github.com/manoloedge/openid4vp_dcql/tree/main/example">example</a> directory for more examples.
 </dd>
 
           <dt id="DcqlQuery">
@@ -120,6 +166,14 @@
   Represents a DCQL (Digital Credentials Query Language) query.
 </dd>
 
+          <dt id="DcqlValidator">
+  <span class="name "><a href="../impl_default_validation/DcqlValidator-class.html">DcqlValidator</a></span> 
+
+</dt>
+<dd>
+  Validates a DCQL query against the specification.
+</dd>
+
           <dt id="DocType">
   <span class="name "><a href="../enum_doc_type/DocType-class.html">DocType</a></span> 
 
@@ -128,8 +182,32 @@
   
 </dd>
 
+          <dt id="DocTypes">
+  <span class="name "><a href="../impl_doc_types/DocTypes-class.html">DocTypes</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="FieldValidator">
+  <span class="name "><a href="../validation_dcql_validator/FieldValidator-class.html">FieldValidator</a></span> 
+
+</dt>
+<dd>
+  A helper class for defining field validators.
+</dd>
+
           <dt id="Format">
   <span class="name "><a href="../enum_format/Format-class.html">Format</a></span> 
+
+</dt>
+<dd>
+  
+</dd>
+
+          <dt id="Formats">
+  <span class="name "><a href="../impl_formats/Formats-class.html">Formats</a></span> 
 
 </dt>
 <dd>
@@ -165,6 +243,14 @@
 
 </dt>
 <dd>
+  Defines the metadata of a DCQL request.
+</dd>
+
+          <dt id="QueryValidator">
+  <span class="name "><a href="../impl_default_validation/QueryValidator-class.html">QueryValidator</a></span> 
+
+</dt>
+<dd>
   
 </dd>
 
@@ -173,7 +259,15 @@
 
 </dt>
 <dd>
-  
+  Defines a trusted authority (issuer) for a credential.
+</dd>
+
+          <dt id="ValidationResult">
+  <span class="name "><a href="../validation_dcql_validator/ValidationResult-class.html">ValidationResult</a></span> 
+
+</dt>
+<dd>
+  The result of a DCQL query validation.
 </dd>
 
       </dl>
@@ -188,7 +282,8 @@
 
 </dt>
 <dd>
-  
+  Mark classes as JSON-serializable by
+using this mixin.
 </dd>
 
       </dl>
@@ -198,8 +293,8 @@
     <section class="summary offset-anchor" id="extensions">
       <h2>Extensions</h2>
       <dl>
-          <dt id="MdocMetaExtension">
-  <span class="name "><a href="../extensions_mdoc_meta.extension/MdocMetaExtension.html">MdocMetaExtension</a></span>
+          <dt id="MetaSetFilterExtension">
+  <span class="name "><a href="../extensions_meta_set_filter_extension/MetaSetFilterExtension.html">MetaSetFilterExtension</a></span>
   on <a href="../meta/Meta-class.html">Meta</a>
   
 
@@ -301,6 +396,19 @@
     </section>
 
 
+    <section class="summary offset-anchor" id="exceptions">
+      <h2>Exceptions / Errors</h2>
+      <dl>
+          <dt id="ValidationException">
+  <span class="name "><a href="../validation_dcql_validator/ValidationException-class.html">ValidationException</a></span> 
+
+</dt>
+<dd>
+  An exception thrown when a DCQL query is invalid.
+</dd>
+
+      </dl>
+    </section>
   </div> <!-- /.main-content -->
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
@@ -329,10 +437,11 @@
       <li><a href="../enum_credential_type/">enum/credential_type</a></li>
       <li><a href="../enum_doc_type/">enum/doc_type</a></li>
       <li><a href="../enum_format/">enum/format</a></li>
-      <li><a href="../extensions_mdoc_meta.extension/">extensions/mdoc_meta.extension</a></li>
+      <li><a href="../extensions_meta_set_filter_extension/">extensions/meta_set_filter_extension</a></li>
       <li><a href="../impl_claims/">impl/claims</a></li>
       <li><a href="../impl_credential_types/">impl/credential_types</a></li>
       <li><a href="../impl_default_validation/">impl/default_validation</a></li>
+      <li><a href="../impl_doc_types/">impl/doc_types</a></li>
       <li><a href="../impl_formats/">impl/formats</a></li>
       <li><a href="../json/">json</a></li>
       <li><a href="../meta/">meta</a></li>

@@ -55,22 +55,43 @@
     
 
 
+    <section>
+      <dl class="dl-horizontal">
+        
+
+        
+        
+  <dt>Mixed-in types</dt>
+  <dd>
+    <ul class="comma-separated clazz-relationships">
+        <li><a href="../json/JsonSerializable-mixin.html">JsonSerializable</a></li>
+    </ul>
+  </dd>
+
+
+        
+        
+
+
+      </dl>
+    </section>
 
     
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
         <dt id="DocType.new" class="callable">
-          <span class="name"><a href="../enum_doc_type/DocType/DocType.html">DocType.new</a></span><span class="signature">()</span>
+          <span class="name"><a href="../enum_doc_type/DocType/DocType.html">DocType.new</a></span><span class="signature">(<span class="parameter" id="-param-id"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">id</span></span>)</span>
         </dt>
         <dd>
           
+            <div class="constructor-modifier features">const</div>
         </dd>
     </dl>
   </section>
     
   <section
-      class="summary offset-anchor inherited"
+      class="summary offset-anchor"
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
@@ -83,6 +104,18 @@
 <dd class="inherited">
   The hash code for this object.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="id" class="property">
+  <span class="name"><a href="../enum_doc_type/DocType/id.html">id</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  
+  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -103,7 +136,7 @@
 
     
   <section
-      class="summary offset-anchor inherited"
+      class="summary offset-anchor"
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
@@ -120,16 +153,29 @@
 
 </dd>
 
-        <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+        <dt id="toJson" class="callable">
+  <span class="name"><a href="../enum_doc_type/DocType/toJson.html">toJson</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Map-class.html">Map</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>, <span class="type-parameter">dynamic</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts the object to a JSON-serializable value.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable">
+  <span class="name"><a href="../enum_doc_type/DocType/toString.html">toString</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
   </span>
   
 
 </dt>
-<dd class="inherited">
+<dd>
   A string representation of this object.
-  <div class="features"><span class="feature">inherited</span></div>
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
@@ -160,96 +206,6 @@
     
     
 
-  <section class="summary offset-anchor" id="constants">
-    <h2>Constants</h2>
-    <dl class="properties">
-        <dt id="ageOver18" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/ageOver18-constant.html">ageOver18</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="mDocMobileDrivingLicense" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/mDocMobileDrivingLicense-constant.html">mDocMobileDrivingLicense</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  <a href="https://credentials.walt.id/iso-mdoc-credentials/mdl-mobile-driving-licence">https://credentials.walt.id/iso-mdoc-credentials/mdl-mobile-driving-licence</a>
-  
-
-</dd>
-
-        <dt id="mDocMobileVehicleRegistration" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/mDocMobileVehicleRegistration-constant.html">mDocMobileVehicleRegistration</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  <a href="https://credentials.walt.id/iso-mdoc-credentials/mvrc-mobile-vehicle-registration">https://credentials.walt.id/iso-mdoc-credentials/mvrc-mobile-vehicle-registration</a>
-  
-
-</dd>
-
-        <dt id="pidDe" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/pidDe-constant.html">pidDe</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Common variation seen in German pilots
-  
-
-</dd>
-
-        <dt id="pidEuOfficial" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/pidEuOfficial-constant.html">pidEuOfficial</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  
-  
-
-</dd>
-
-        <dt id="pidNl" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/pidNl-constant.html">pidNl</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  Common variation seen in Dutch pilots
-  
-
-</dd>
-
-        <dt id="pidPilot" class="constant">
-    <span class="name "><a href="../enum_doc_type/DocType/pidPilot-constant.html">pidPilot</a></span>
-  <span class="signature">&#8594; const <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
-  
-
-</dt>
-<dd>
-  The shortened PID VCT used in many reference implementations and pilots.
-(This matches your working example)
-  
-
-</dd>
-
-    </dl>
-  </section>
   </div> <!-- /.main-content -->
   <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
     <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->

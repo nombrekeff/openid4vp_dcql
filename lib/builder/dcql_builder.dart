@@ -26,6 +26,10 @@ class DcqlBuilder {
   }
 
   /// Adds a new credential to the query.
+  ///
+  /// [id] is the unique identifier for the credential.
+  /// [format] is the format of the credential (e.g., mdoc, sd_jwt).
+  /// [type] is a helper to set the format and meta filter based on a known credential type.
   DcqlCredentialBuilder credential(
     String id, {
     Format? format,
@@ -46,6 +50,9 @@ class DcqlBuilder {
   }
 
   /// Adds a new credential set to the query.
+  ///
+  /// [required] specifies if the credential set is required.
+  /// [options] is a list of options, where each option is a list of credential IDs.
   DcqlCredentialSetBuilder credentialSet({
     bool? required,
     List<List<String>>? options,
@@ -82,5 +89,7 @@ class DcqlBuilder {
   }
 
   /// Separator, returns the current builder instance.
+  ///
+  /// Use this to visually separate logical blocks in the builder chain.
   DcqlBuilder get $_ => this;
 }

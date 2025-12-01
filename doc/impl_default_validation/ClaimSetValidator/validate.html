@@ -82,7 +82,8 @@
   if (credential.claimSets != null) {
     for (var j = 0; j &lt; credential.claimSets!.length; j++) {
       final claimSet = credential.claimSets![j];
-      final contextPath = &#39;query.credentials[$credentialIndex].claim_sets[$j]&#39;;
+      final contextPath =
+          &#39;query.credentials[$credentialIndex].claim_sets[$j]&#39;;
 
       if (claimSet.isEmpty) {
         return ValidationResult.invalid(
@@ -96,9 +97,9 @@
         final contextPathElement = &#39;$contextPath[$k]&#39;;
 
         final matchingClaim = credential.claims?.cast&lt;Claim?&gt;().firstWhere(
-          (claim) =&gt; claim?.id == claimId,
-          orElse: () =&gt; null,
-        );
+              (claim) =&gt; claim?.id == claimId,
+              orElse: () =&gt; null,
+            );
 
         if (matchingClaim == null) {
           return ValidationResult.invalid(

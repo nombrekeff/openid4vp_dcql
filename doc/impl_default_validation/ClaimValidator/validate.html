@@ -79,9 +79,21 @@
   }
 
   if (credential.claims != null) {
+    final seenIds = &lt;String&gt;{};
+
     for (var j = 0; j &lt; credential.claims!.length; j++) {
       final claim = credential.claims![j];
       final contextPath = &#39;query.credentials[$credentialIndex].claims[$j]&#39;;
+
+      if (claim.id != null) {
+        if (seenIds.contains(claim.id)) {
+          return ValidationResult.invalid(
+            contextPath: &#39;$contextPath.id&#39;,
+            errors: [&#39;Duplicate claim ID &quot;${claim.id}&quot; found&#39;],
+          );
+        }
+        seenIds.add(claim.id!);
+      }
 
       final idValidationResult = validateId(credential, claim, contextPath);
       if (!idValidationResult.isValid) return idValidationResult;

@@ -1,4 +1,8 @@
-/// OpenID for Verifiable Presentation (DCQL) Builder library
+/// OpenID for Verifiable Presentation (DCQL) Builder library.
+///
+/// This library provides a fluent API for building and validating Digital Credentials Query Language (DCQL) queries.
+///
+/// See: https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query
 library;
 
 export 'builder/dcql_builder.dart';

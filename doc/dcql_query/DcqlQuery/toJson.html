@@ -67,7 +67,7 @@
     </section>
     
 <section class="desc markdown">
-  <p>Converts the object to a JSON-serializable map/list.</p>
+  <p>Converts the object to a JSON-serializable value.</p>
 </section>
 
 
@@ -78,7 +78,8 @@
 Map&lt;String, dynamic&gt; toJson() {
   return {
     &#39;credentials&#39;: credentials.map((c) =&gt; c.toJson()).toList(),
-    &#39;credential_sets&#39;: credentialSets?.map((cs) =&gt; cs.toJson()).toList(),
+    if (credentialSets != null)
+      &#39;credential_sets&#39;: credentialSets?.map((cs) =&gt; cs.toJson()).toList(),
   };
 }</code></pre>
 </section>

@@ -195,7 +195,7 @@ void main() {
         );
         expect(
           result.errors?.first,
-          contains('Claim path elements must be String, int, or null'),
+          contains('Claim path elements must be String, int (>=0), or null.'),
         );
       });
     });

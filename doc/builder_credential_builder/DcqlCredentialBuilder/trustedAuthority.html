@@ -63,6 +63,9 @@
 
     </section>
     
+<section class="desc markdown">
+  <p>Adds a trusted authority (issuer) for the credential.</p>
+</section>
 
 
     
@@ -70,7 +73,9 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">DcqlCredentialBuilder trustedAuthority(String type, List&lt;String&gt; values) {
   _credential.trustedAuthorities ??= [];
-  _credential.trustedAuthorities!.add(TrustedAuthority(type: type, values: values));
+  _credential.trustedAuthorities!.add(
+    TrustedAuthority(type: type, values: values),
+  );
   return _credentialBuilder;
 }</code></pre>
 </section>

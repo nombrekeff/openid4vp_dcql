@@ -59,15 +59,20 @@
 </ol>})
     </section>
     
+<section class="desc markdown">
+  <p>Creates an invalid result with a list of errors.</p>
+</section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">ValidationResult.invalid({String? contextPath, List&lt;String&gt; errors = const []})
-  : _isValid = false,
-    _errors = errors,
-    _contextPath = contextPath;</code></pre>
+  <pre class="language-dart"><code class="language-dart">ValidationResult.invalid({
+  String? contextPath,
+  List&lt;String&gt; errors = const [],
+})  : _isValid = false,
+      _errors = errors,
+      _contextPath = contextPath;</code></pre>
 </section>
 
 

@@ -2,6 +2,7 @@ name: openid4vp_dcql
 description: A Dart library for building, validating, and serializing Digital Credentials Query Language (DCQL) queries for OpenID for Verifiable Presentations (OpenID4VP).
 version: 1.0.0
 repository: https://github.com/nombrekeff/openid4vp_dcql
+documentation: /doc/
 
 environment:
   sdk: ^3.0.0
