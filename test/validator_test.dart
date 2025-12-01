@@ -150,11 +150,11 @@ void main() {
         expect(result.isValid, isFalse);
         expect(
           result.contextPath,
-          equals('query.credentials[0].claims[0].values[0]'),
+          equals('query.credentials[0].claims[0].values'),
         );
         expect(
           result.errors?.first,
-          contains('Claim "values" must be String, int, or bool'),
+          contains('Values must be a non-empty list of strings, ints, or bools if provided'),
         );
       });
 
@@ -178,7 +178,7 @@ void main() {
         );
         expect(
           result.errors?.first,
-          contains('Claim "values" cannot be an empty list'),
+          contains('Values must be a non-empty list of strings, ints, or bools if provided'),
         );
       });
 

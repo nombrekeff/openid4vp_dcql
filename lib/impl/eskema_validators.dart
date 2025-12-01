@@ -24,6 +24,12 @@ final pathValidator = listEach(
     Expectation(
       message: "Path must be a non-empty list of strings, ints (>=0), or null",
     );
+final valuesValidator =
+    (listEach(any([isString(), isInt(), isBool()])) & notEmptyList) | $isNull >
+        Expectation(
+          message:
+              "Values must be a non-empty list of strings, ints, or bools if provided",
+        );
 
 final mdocMetaValidator = eskema({
   'doctype_value': isString(message: "must be a string"),

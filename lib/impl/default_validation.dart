@@ -17,6 +17,7 @@ class ClaimValidator {
         final claim = credential.claims![j];
         final contextPath = 'query.credentials[$credentialIndex].claims[$j]';
 
+        // Check for duplicate claim ids
         if (claim.id != null) {
           if (seenIds.contains(claim.id)) {
             return ValidationResult.invalid(
@@ -80,7 +81,7 @@ class ClaimValidator {
 
   ValidationResult validatePath(List<dynamic> path, String contextPath) {
     final pathResult = pathValidator.validate(path);
-    
+
     if (pathResult.isNotValid) {
       return ValidationResult.invalid(
         contextPath: contextPath,
@@ -92,25 +93,13 @@ class ClaimValidator {
   }
 
   ValidationResult validateValues(List<Object>? values, String contextPath) {
-    if (values == null) {
-      return ValidationResult.valid();
-    }
+    final valuesResult = valuesValidator.validate(values);
 
-    if (values.isEmpty) {
+    if (!valuesResult.isValid) {
       return ValidationResult.invalid(
         contextPath: contextPath,
-        errors: ['Claim "values" cannot be an empty list if provided.'],
+        errors: [valuesResult.expectations.map((e) => e.toString()).join(', ')],
       );
-    }
-
-    for (var k = 0; k < values.length; k++) {
-      final value = values[k];
-      if (value is! String && value is! int && value is! bool) {
-        return ValidationResult.invalid(
-          contextPath: '$contextPath[$k]',
-          errors: ['Claim "values" must be String, int, or bool.'],
-        );
-      }
     }
 
     return ValidationResult.valid();
@@ -191,8 +180,8 @@ class CredentialsValidator {
       seenIds.add(credential.id);
 
       // The id MUST be a non-empty string consisting of alphanumeric, underscore (_), or hyphen (-) characters
-      final idPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
-      if (!idPattern.hasMatch(credential.id) || credential.id.isEmpty) {
+      final isValidId = idValidator.isValid(credential.id);
+      if (!isValidId) {
         return ValidationResult.invalid(
           contextPath: 'query.credentials[$i].id',
           errors: [
@@ -201,16 +190,15 @@ class CredentialsValidator {
         );
       }
 
-      // Additional credential validations can be added here
-      // Validate meta, for sd jwt should have vct_values, and mdoc should have doctype_value
-
       // claims
       if (credential.claims != null && credential.claims!.isEmpty) {
         return ValidationResult.invalid(
           contextPath: 'query.credentials[$i].claims',
           errors: ['Credential claims cannot be an empty list if provided.'],
         );
-      } else if (credential.claims != null) {
+      }
+
+      if (credential.claims != null) {
         final claimValidationResult = _claimValidator.validate(
           credential: credential,
           query: query,
@@ -266,6 +254,7 @@ class CredentialSetValidator {
 
         for (var k = 0; k < option.length; k++) {
           final credId = option[k];
+
           if (!validCredentialIds.contains(credId)) {
             return ValidationResult.invalid(
               contextPath: 'query.credential_sets[$i].options[$j][$k]',
