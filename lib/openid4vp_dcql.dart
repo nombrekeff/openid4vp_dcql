@@ -16,7 +16,4 @@ export 'meta.dart';
 export 'trusted_authorities.dart';
 export 'validation/dcql_validator.dart';
 
-// TODO: Consider making Claim generic to allow for different claim types (e.g., string, int, bool, etc.)
-// TODO: Organize magic strings and constants into a single file or class
 // TODO: Add quality of life improvements like copyWith, toString, equals, hashCode, etc.
-// TODO:
