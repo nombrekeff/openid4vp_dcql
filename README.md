@@ -1,5 +1,8 @@
 # OpenID4VP DCQL
 
+[![Status](https://github.com/nombrekeff/openid4vp_dcql/actions/workflows/dart.yml/badge.svg)](https://github.com/nombrekeff/openid4vp_dcql/actions/workflows/dart.yml)
+[![Pub](https://img.shields.io/pub/v/openid4vp_dcql)](https://pub.dev/packages/openid4vp_dcql)
+
 A Dart library for building and validating **Digital Credentials Query Language (DCQL)** queries as defined in the [OpenID for Verifiable Presentations (OpenID4VP) v1.0 specification](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query).
 
 Build complex credential queries with a fluent, type-safe API, validate them against the spec, and serialize them to JSON for transmission.
@@ -8,9 +11,9 @@ Build complex credential queries with a fluent, type-safe API, validate them aga
 
 List of package versions and what specs they support
 
-| version | Spec                                                                                              |
-| ------- | ------------------------------------------------------------------------------------------------- |
-| v1.0.0  | [v1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query) |
+| version                                                          | Spec                                                                                              |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [v1.0.0](https://pub.dev/packages/openid4vp_dcql/versions/1.0.0) | [v1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query) |
 
 ## Why
 
