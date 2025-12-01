@@ -1,6 +1,5 @@
 import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/enum/doc_type.dart';
-import 'package:openid4vp_dcql/impl/doc_types.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/meta.dart';
 
@@ -8,7 +7,7 @@ extension MetaSetFilterExtension on Meta {
   Meta setFilter(CredentialType type) {
     switch (type.format) {
       case Formats.mdoc:
-        return setDocType(DocTypes.mDocMobileDrivingLicense);
+        return setDocType(type.docType);
       case Formats.jwt:
         return setVctValues([type.docType.id]);
     }
