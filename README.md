@@ -47,7 +47,8 @@ import 'dart:convert';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 
 void main() {
-  final query = DcqlBuilder()
+  try {
+    final query = DcqlBuilder()
       // Request an mDoc Driving License
       .credential('credential-1', type: CredentialType.mdocDl)
           .claim(Claims.mdocDl.firstName, id: 'first_name')
@@ -63,15 +64,14 @@ void main() {
       .credentialSet()
           .option(['credential-1'])
           .option(['credential-2'])
-      
+
+      // Build will throw a ValidationException if the query is invalid
+      // can be skipped by setting (skipValidation: true)
       .build();
 
-  // Validate the query structure
-  final validation = DcqlValidator().validate(query);
-  if (validation.isValid) {
     print(jsonEncode(query.toJson()));
-  } else {
-    print('Invalid query: ${validation.errors}');
+  } catch (e) {
+    print(e);
   }
 }
 ```
@@ -135,18 +135,38 @@ void main() {
 The `DcqlBuilder` allows you to chain methods to define credentials, claims, and sets naturally.
 
 ### Validation
+The library includes a robust validator `DcqlValidator` that checks for:
 
-The library includes a robust validator that checks for:
+* **Uniqueness**: Ensures all credential and claim IDs are unique within their scope.
+* **Referential Integrity**: Verifies that all IDs referenced in `claim_sets` and `credential_sets` actually exist.
+* **Structure**: Checks for non-empty paths, correct value types, and required fields.
+* **Format Compliance**: Validates format-specific requirements (e.g., `doctype_value` for mdoc).
 
-* Unique IDs for credentials and claims.
-* Valid references in `claim_sets` and `credential_sets`.
-* Correct value types and non-empty paths.
+You can validate a query object or a JSON string:
+
+```dart
+final validator = DcqlValidator();
+
+// Validate a DcqlQuery object
+final result = validator.validate(query);
+
+// Validate a JSON string
+final resultJson = validator.validateJson(jsonString);
+
+if (result.isInvalid) {
+  print('Validation failed:');
+  for (final error in result.errors!) {
+    print('- $error');
+  }
+}
+```
+
+> **Note**: The `DcqlBuilder.build()` method automatically runs validation and throws a `ValidationException` if the query is invalid. To skip this check, use `.build(skipValidation: true)`.
 
 ### Supported Formats
 
 * `mso_mdoc` (Mobile Driving License, etc.)
 * `dc+sd-jwt` (SD-JWT VC)
-* `jwt_vc_json` (W3C Verifiable Credentials)
 
 ## Contributing
 
