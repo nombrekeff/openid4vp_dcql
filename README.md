@@ -4,6 +4,14 @@ A Dart library for building and validating **Digital Credentials Query Language 
 
 Build complex credential queries with a fluent, type-safe API, validate them against the spec, and serialize them to JSON for transmission.
 
+## Package version to Spec
+
+List of package versions and what specs they support
+
+| version | Spec                                                                                              |
+| ------- | ------------------------------------------------------------------------------------------------- |
+| v1.0.0  | [v1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query) |
+
 ## Why
 
 * **Fluent Builder API**: Construct complex nested queries with readable, chainable methods.
