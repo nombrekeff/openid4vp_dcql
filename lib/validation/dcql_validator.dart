@@ -5,11 +5,11 @@ class ValidationResult {
   final String? _contextPath;
   final List<String>? _errors;
 
-  ValidationResult(
-      {String? contextPath,
-      bool isValid = true,
-      List<String> errors = const []})
-      : _isValid = isValid,
+  ValidationResult({
+    String? contextPath,
+    bool isValid = true,
+    List<String> errors = const [],
+  })  : _isValid = isValid,
         _errors = errors,
         _contextPath = contextPath;
 
@@ -37,14 +37,14 @@ class ValidationResult {
   }
 }
 
-class ValidationExpection implements Exception {
+class ValidationException implements Exception {
   final ValidationResult result;
 
-  ValidationExpection(this.result);
+  ValidationException(this.result);
 
   @override
   String toString() {
-    return 'ValidationExpection(result: $result)';
+    return 'ValidationException(result: $result)';
   }
 }
 

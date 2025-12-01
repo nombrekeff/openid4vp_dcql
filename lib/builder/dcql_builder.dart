@@ -68,13 +68,13 @@ class DcqlBuilder {
 
   /// Builds the DCQL query.
   /// If [skipValidation] is false, the query will be validated before building.
-  /// Throws a [ValidationExpection] if the query is invalid.
+  /// Throws a [ValidationException] if the query is invalid.
   DcqlQuery build({bool skipValidation = false}) {
     if (!skipValidation) {
       final result = validate();
 
       if (result.isInvalid) {
-        throw ValidationExpection(result);
+        throw ValidationException(result);
       }
     }
 

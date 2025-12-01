@@ -56,9 +56,39 @@ void main() {
       final query = DcqlQuery();
       expect(query.toString(), contains('DcqlQuery'));
     });
+
+    test('toJson omits empty credential_sets', () {
+      final query = DcqlQuery()..addCredential(Credential(id: 'c1'));
+      final json = query.toJson();
+      expect(json.containsKey('credential_sets'), isFalse);
+    });
+
+    test('toJson includes credential_sets if present', () {
+      final query = DcqlQuery()
+        ..addCredential(Credential(id: 'c1'))
+        ..addCredentialSet(
+          CredentialSet(
+            options: [
+              ['c1'],
+            ],
+          ),
+        );
+      final json = query.toJson();
+      expect(json.containsKey('credential_sets'), isTrue);
+    });
   });
 
   group('Credential', () {
+    test('fromJson defaults to sd_jwt for unknown format', () {
+      final json = {
+        'id': 'c1',
+        'format': 'unknown_format',
+        'meta': <String, dynamic>{},
+      };
+      final credential = Credential.fromJson(json);
+      expect(credential.format, Formats.sd_jwt);
+    });
+
     test('toJson and fromJson work correctly', () {
       final credential = Credential(
         id: 'c1',
@@ -205,22 +235,15 @@ void main() {
     });
 
     test('trustedAuthority() adds trusted authority', () {
-      final builder = DcqlBuilder().credential('c1').trustedAuthority('type', ['value']);
+      final builder =
+          DcqlBuilder().credential('c1').trustedAuthority('type', ['value']);
       final query = builder.build();
       expect(query.credentials.first.trustedAuthorities, hasLength(1));
       expect(query.credentials.first.trustedAuthorities!.first.type, 'type');
-      expect(query.credentials.first.trustedAuthorities!.first.values, equals(['value']));
-    });
-
-    test('trustedAuth json serialization works', () {
-      final authority = TrustedAuthority(type: 'type', values: ['value']);
-      final json = authority.toJson();
-      expect(json['type'], 'type');
-      expect(json['values'], equals(['value']));
-
-      final fromJson = TrustedAuthority.fromJson(json);
-      expect(fromJson.type, 'type');
-      expect(fromJson.values, equals(['value']));
+      expect(
+        query.credentials.first.trustedAuthorities!.first.values,
+        equals(['value']),
+      );
     });
 
     test('claim() adds claim to credential', () {
@@ -228,14 +251,6 @@ void main() {
       final builder = DcqlBuilder().credential('c1').claim(claim);
       final query = builder.build();
       expect(query.credentials.first.claims, contains(claim));
-    });
-
-    test('claim() copyWith', () {
-      final claim = Claim(path: ['name'], values: ['Alice']);
-      final ccp = claim.copyWith(id: 'claim1', values: ['Bob']);
-      expect(ccp.id, 'claim1');
-      expect(ccp.path, equals(['name']));
-      expect(ccp.values, equals(['Bob']));
     });
 
     test('requireBinding() sets requireCryptographicHolderBinding', () {
@@ -264,6 +279,42 @@ void main() {
     });
   });
 
+  group('TrustedAuthority', () {
+    test('toJson and fromJson work correctly', () {
+      final authority = TrustedAuthority(type: 'type', values: ['value']);
+      final json = authority.toJson();
+      expect(json['type'], 'type');
+      expect(json['values'], equals(['value']));
+
+      final fromJson = TrustedAuthority.fromJson(json);
+      expect(fromJson.type, 'type');
+      expect(fromJson.values, equals(['value']));
+    });
+  });
+
+  group('Claim Model', () {
+    test('toJson and fromJson work correctly', () {
+      final claim = Claim(path: ['name'], id: 'claim1', values: ['value']);
+      final json = claim.toJson();
+      expect(json['id'], 'claim1');
+      expect(json['path'], equals(['name']));
+      expect(json['values'], equals(['value']));
+
+      final fromJson = Claim.fromJson(json);
+      expect(fromJson.id, 'claim1');
+      expect(fromJson.path, equals(['name']));
+      expect(fromJson.values, equals(['value']));
+    });
+
+    test('copyWith works correctly', () {
+      final claim = Claim(path: ['name'], values: ['Alice']);
+      final ccp = claim.copyWith(id: 'claim1', values: ['Bob']);
+      expect(ccp.id, 'claim1');
+      expect(ccp.path, equals(['name']));
+      expect(ccp.values, equals(['Bob']));
+    });
+  });
+
   group('Format enum', () {
     test('toString works correctly', () {
       expect(Formats.mdoc.toString(), 'mso_mdoc');
@@ -284,7 +335,10 @@ void main() {
 
     test('docType works correctly', () {
       expect(CredentialTypes.mdocDl.docType.id, 'org.iso.18013.5.1.mDL');
-      expect(CredentialTypes.sdJwtPid.docType.id, 'urn:eu.europa.ec.eudi.pid.1');
+      expect(
+        CredentialTypes.sdJwtPid.docType.id,
+        'urn:eu.europa.ec.eudi.pid.1',
+      );
     });
 
     test('toJson works correctly', () {
@@ -299,10 +353,14 @@ void main() {
     });
 
     test('toString', () {
-      expect(CredentialTypes.mdocDl.toString(),
-          'CredentialType(format: mso_mdoc, docType: org.iso.18013.5.1.mDL)');
-      expect(CredentialTypes.sdJwtPid.toString(),
-          'CredentialType(format: dc+sd-jwt, docType: urn:eu.europa.ec.eudi.pid.1)');
+      expect(
+        CredentialTypes.mdocDl.toString(),
+        'CredentialType(format: mso_mdoc, docType: org.iso.18013.5.1.mDL)',
+      );
+      expect(
+        CredentialTypes.sdJwtPid.toString(),
+        'CredentialType(format: dc+sd-jwt, docType: urn:eu.europa.ec.eudi.pid.1)',
+      );
     });
   });
 }

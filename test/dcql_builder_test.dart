@@ -16,6 +16,19 @@ void main() {
       expect(query.credentialSets, isNull);
     });
 
+    test('initializes with default values', () {
+      expect(builder.query.credentials, isEmpty);
+      expect(builder.query.credentialSets, isNull);
+    });
+
+    test('initializes with provided validator and query', () {
+      final validator = DcqlValidator();
+      final query = DcqlQuery();
+      final customBuilder = DcqlBuilder(validator: validator, query: query);
+      expect(customBuilder.validator, validator);
+      expect(customBuilder.query, query);
+    });
+
     group('Credential Building', () {
       test('credential() adds a credential with ID', () {
         final query = builder.credential('cred-1').build();
@@ -30,9 +43,8 @@ void main() {
       });
 
       test('credential() with CredentialType sets format and docType', () {
-        final query = builder
-            .credential('cred-1', type: CredentialTypes.mdocDl)
-            .build();
+        final query =
+            builder.credential('cred-1', type: CredentialTypes.mdocDl).build();
 
         final cred = query.credentials.first;
         expect(cred.format, equals(Formats.mdoc));
@@ -77,8 +89,10 @@ void main() {
 
     group('Credential Set Building', () {
       test('credentialSet() fails if no option added to set', () {
-        expect(() => builder.credential('cred-1').credentialSet().build(),
-            throwsA(isA<ValidationExpection>()));
+        expect(
+          () => builder.credential('cred-1').credentialSet().build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('credentialSet() adds a credential set', () {
@@ -112,8 +126,10 @@ void main() {
       });
 
       test('credentialSet() fails if there are no options', () {
-        expect(() => builder.credentialSet().build(),
-            throwsA(isA<ValidationExpection>()));
+        expect(
+          () => builder.credentialSet().build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('required() sets required flag', () {
@@ -164,46 +180,86 @@ void main() {
     group('Validation', () {
       test('credentialSet() fails if option is empty list', () {
         expect(
-            () => builder
-                .credential('cred-1')
-                .credentialSet()
-                .option([])
-                .build(),
-            throwsA(isA<ValidationExpection>()));
+          () => builder.credential('cred-1').credentialSet().option([]).build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('credential() fails if id is invalid', () {
-        expect(() => builder.credential('invalid id').build(),
-            throwsA(isA<ValidationExpection>()));
+        expect(
+          () => builder.credential('invalid id').build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('claim() fails if id is invalid', () {
         expect(
-            () => builder
-                .credential('cred-1')
-                .claim(Claims.mdocDl.firstName, id: 'invalid id')
-                .build(),
-            throwsA(isA<ValidationExpection>()));
+          () => builder
+              .credential('cred-1')
+              .claim(Claims.mdocDl.firstName, id: 'invalid id')
+              .build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('claim() fails if id is missing when claim sets are present', () {
         expect(
-            () => builder
-                .credential('cred-1')
-                .claim(Claims.mdocDl.firstName) // No ID
-                .claimSet(['some_id'])
-                .build(),
-            throwsA(isA<ValidationExpection>()));
+          () => builder
+              .credential('cred-1')
+              .claim(Claims.mdocDl.firstName) // No ID
+              .claimSet(['some_id']).build(),
+          throwsA(isA<ValidationException>()),
+        );
       });
 
       test('claimSet() fails if claim ID does not exist', () {
         expect(
-            () => builder
-                .credential('cred-1')
-                .claim(Claims.mdocDl.firstName, id: 'id1')
-                .claimSet(['non_existent_id'])
-                .build(),
-            throwsA(isA<ValidationExpection>()));
+          () => builder
+              .credential('cred-1')
+              .claim(Claims.mdocDl.firstName, id: 'id1')
+              .claimSet(['non_existent_id']).build(),
+          throwsA(isA<ValidationException>()),
+        );
+      });
+
+      test('build(skipValidation: true) allows invalid state', () {
+        final query =
+            builder.credential('invalid id').build(skipValidation: true);
+        expect(query.credentials.first.id, 'invalid id');
+      });
+
+      test('Fails if credential ID is empty', () {
+        expect(
+          () => builder.credential('').build(),
+          throwsA(isA<ValidationException>()),
+        );
+      });
+
+      test('Fails if claim values are empty', () {
+        expect(
+          () => builder
+              .credential('cred-1')
+              .claim(Claim(path: ['path'], values: []))
+              .build(),
+          throwsA(isA<ValidationException>()),
+        );
+      });
+    });
+
+    group('Complex Success Scenarios', () {
+      test('Builds complex query with multiple credentials and sets', () {
+        final query = builder
+            .credential('cred-1', format: Formats.mdoc)
+            .claim(Claims.mdocDl.firstName, id: 'first_name')
+            .claim(Claims.mdocDl.familyName, id: 'family_name')
+            .credential('cred-2', format: Formats.jwt)
+            .claim(Claims.sdJwtPid.givenName, id: 'given_name')
+            .credentialSet(required: true)
+            .option(['cred-1']).option(['cred-2']).build();
+
+        expect(query.credentials, hasLength(2));
+        expect(query.credentialSets, hasLength(1));
+        expect(query.credentialSets!.first.options, hasLength(2));
       });
     });
   });

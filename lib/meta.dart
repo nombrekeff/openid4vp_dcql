@@ -1,5 +1,6 @@
 import 'package:openid4vp_dcql/json.dart';
 
+/// Defines the metadata of a DCQL request.
 class Meta with JsonSerializable {
   final Map<String, dynamic> _meta;
 

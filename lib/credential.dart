@@ -79,7 +79,7 @@ class Credential<C extends Claim> with JsonSerializable {
         (f) => f.name == (c['format'] as String),
         orElse: () => Formats.sd_jwt,
       ),
-      meta: Meta.fromJson(c['meta'] as Map<String, dynamic>),
+      meta: Meta.fromJson(c['meta'] as Map<String, dynamic>? ?? {}),
       multiple: c['multiple'] as bool?,
       claims:
           (c['claims'] as List<dynamic>?)

@@ -17,12 +17,13 @@ analyzer:
     constant_identifier_names: ignore
     file_names: ignore
     non_constant_identifier_names: ignore
+    require_trailing_commas: error
 
 # Uncomment the following section to specify additional rules.
 
-# linter:
-#   rules:
-#     - camel_case_types
+linter:
+  rules:
+    - require_trailing_commas
 
 # analyzer:
 #   exclude:

@@ -13,17 +13,30 @@ class ClaimValidator {
     }
 
     if (credential.claims != null) {
+      final seenIds = <String>{};
       for (var j = 0; j < credential.claims!.length; j++) {
         final claim = credential.claims![j];
         final contextPath = 'query.credentials[$credentialIndex].claims[$j]';
 
+        if (claim.id != null) {
+          if (seenIds.contains(claim.id)) {
+            return ValidationResult.invalid(
+              contextPath: '$contextPath.id',
+              errors: ['Duplicate claim ID "${claim.id}" found'],
+            );
+          }
+          seenIds.add(claim.id!);
+        }
+
         final idValidationResult = validateId(credential, claim, contextPath);
         if (!idValidationResult.isValid) return idValidationResult;
 
-        final pathValidationResult = validatePath(claim.path, '$contextPath.path');
+        final pathValidationResult =
+            validatePath(claim.path, '$contextPath.path');
         if (!pathValidationResult.isValid) return pathValidationResult;
 
-        final valuesValidationResult = validateValues(claim.values, '$contextPath.values');
+        final valuesValidationResult =
+            validateValues(claim.values, '$contextPath.values');
         if (!valuesValidationResult.isValid) return valuesValidationResult;
       }
     }
@@ -44,8 +57,14 @@ class ClaimValidator {
       );
     }
 
-    if (claim.id != null && claim.id!.isNotEmpty) {
-      // If id is provided, it must be non-empty
+    if (claim.id != null) {
+      if (claim.id!.isEmpty) {
+        return ValidationResult.invalid(
+          contextPath: '$contextPath.id',
+          errors: ['Claim ID cannot be empty if provided.'],
+        );
+      }
+
       final idPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
       if (!idPattern.hasMatch(claim.id!)) {
         return ValidationResult.invalid(
@@ -167,8 +186,17 @@ class CredentialsValidator {
       );
     }
 
+    final seenIds = <String>{};
     for (var i = 0; i < query.credentials.length; i++) {
       var credential = query.credentials[i];
+
+      if (seenIds.contains(credential.id)) {
+        return ValidationResult.invalid(
+          contextPath: 'query.credentials[$i].id',
+          errors: ['Duplicate credential ID "${credential.id}" found'],
+        );
+      }
+      seenIds.add(credential.id);
 
       // The id MUST be a non-empty string consisting of alphanumeric, underscore (_), or hyphen (-) characters
       final idPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
@@ -223,6 +251,8 @@ class CredentialSetValidator {
       return ValidationResult.valid();
     }
 
+    final validCredentialIds = query.credentials.map((c) => c.id).toSet();
+
     for (var i = 0; i < query.credentialSets!.length; i++) {
       final credentialSet = query.credentialSets![i];
 
@@ -240,6 +270,18 @@ class CredentialSetValidator {
             contextPath: 'query.credential_sets[$i].options[$j]',
             errors: ['CredentialSet option cannot be an empty list.'],
           );
+        }
+
+        for (var k = 0; k < option.length; k++) {
+          final credId = option[k];
+          if (!validCredentialIds.contains(credId)) {
+            return ValidationResult.invalid(
+              contextPath: 'query.credential_sets[$i].options[$j][$k]',
+              errors: [
+                'Credential ID "$credId" in credential set does not match any credential in the query.',
+              ],
+            );
+          }
         }
       }
     }
