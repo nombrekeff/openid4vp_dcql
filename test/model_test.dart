@@ -109,7 +109,7 @@ void main() {
       expect(json['multiple'], true);
       expect(json['meta'], isNotEmpty);
       expect(json['claims'], hasLength(1));
-      expect(json['claimSets'], hasLength(1));
+      expect(json['claim_sets'], hasLength(1));
 
       final fromJson = Credential.fromJson(json);
       expect(fromJson.id, 'c1');

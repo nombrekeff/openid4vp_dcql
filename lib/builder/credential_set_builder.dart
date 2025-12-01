@@ -1,5 +1,5 @@
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
-import 'package:openid4vp_dcql/credential_set.dart';
+import 'package:openid4vp_dcql/model/credential_set.dart';
 
 class DcqlCredentialSetBuilder extends DcqlBuilder {
   late final DcqlCredentialSetBuilder _credentialSetBuilder;

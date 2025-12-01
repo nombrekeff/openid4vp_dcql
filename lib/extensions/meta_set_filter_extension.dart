@@ -1,7 +1,7 @@
 import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/enum/doc_type.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
-import 'package:openid4vp_dcql/meta.dart';
+import 'package:openid4vp_dcql/model/meta.dart';
 
 extension MetaSetFilterExtension on Meta {
   Meta setFilter(CredentialType type) {

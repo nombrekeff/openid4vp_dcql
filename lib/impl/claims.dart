@@ -1,4 +1,4 @@
-import 'package:openid4vp_dcql/claim.dart';
+import 'package:openid4vp_dcql/model/claim.dart';
 import 'package:openid4vp_dcql/constants.dart';
 
 const String mdocMdl = DcqlConstants.iso18013_5_1;

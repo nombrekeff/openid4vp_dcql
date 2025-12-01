@@ -1,7 +1,7 @@
-import 'package:openid4vp_dcql/claim.dart';
-import 'package:openid4vp_dcql/credential.dart';
-import 'package:openid4vp_dcql/credential_set.dart';
-import 'package:openid4vp_dcql/dcql_query.dart';
+import 'package:openid4vp_dcql/model/claim.dart';
+import 'package:openid4vp_dcql/model/credential.dart';
+import 'package:openid4vp_dcql/model/credential_set.dart';
+import 'package:openid4vp_dcql/model/dcql_query.dart';
 import 'package:openid4vp_dcql/impl/default_validation.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/validation/dcql_validator.dart';

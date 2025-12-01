@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
-import 'package:openid4vp_dcql/claim.dart';
+import 'package:openid4vp_dcql/model/claim.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 
 /// Example 6: Value Constraints

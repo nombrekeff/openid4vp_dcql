@@ -1,8 +1,8 @@
 import 'package:openid4vp_dcql/builder/credential_builder.dart';
 import 'package:openid4vp_dcql/builder/credential_set_builder.dart';
-import 'package:openid4vp_dcql/credential.dart';
-import 'package:openid4vp_dcql/credential_set.dart';
-import 'package:openid4vp_dcql/dcql_query.dart';
+import 'package:openid4vp_dcql/model/credential.dart';
+import 'package:openid4vp_dcql/model/credential_set.dart';
+import 'package:openid4vp_dcql/model/dcql_query.dart';
 import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 import 'package:openid4vp_dcql/extensions/meta_set_filter_extension.dart';

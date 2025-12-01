@@ -1,5 +1,5 @@
-import 'package:openid4vp_dcql/credential.dart';
-import 'package:openid4vp_dcql/credential_set.dart';
+import 'package:openid4vp_dcql/model/credential.dart';
+import 'package:openid4vp_dcql/model/credential_set.dart';
 import 'package:openid4vp_dcql/json.dart';
 
 /// Represents a DCQL (Digital Credentials Query Language) query.

@@ -1,10 +1,10 @@
 import 'package:openid4vp_dcql/builder/dcql_builder.dart';
-import 'package:openid4vp_dcql/claim.dart';
-import 'package:openid4vp_dcql/credential.dart';
+import 'package:openid4vp_dcql/model/claim.dart';
+import 'package:openid4vp_dcql/model/credential.dart';
 import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/extensions/meta_set_filter_extension.dart';
 import 'package:openid4vp_dcql/impl/credential_types.dart';
-import 'package:openid4vp_dcql/trusted_authorities.dart';
+import 'package:openid4vp_dcql/model/trusted_authorities.dart';
 
 class DcqlCredentialBuilder extends DcqlBuilder {
   late final DcqlCredentialBuilder _credentialBuilder;

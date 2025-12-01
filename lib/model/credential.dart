@@ -1,9 +1,9 @@
-import 'package:openid4vp_dcql/claim.dart';
+import 'package:openid4vp_dcql/model/claim.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
 import 'package:openid4vp_dcql/impl/formats.dart';
 import 'package:openid4vp_dcql/json.dart';
-import 'package:openid4vp_dcql/meta.dart';
-import 'package:openid4vp_dcql/trusted_authorities.dart';
+import 'package:openid4vp_dcql/model/meta.dart';
+import 'package:openid4vp_dcql/model/trusted_authorities.dart';
 
 /// Represents a requested credential in a DCQL query.
 ///
@@ -84,7 +84,7 @@ class Credential<C extends Claim> with JsonSerializable {
       'meta': meta.toJson(),
       if (claims != null) 'claims': claims?.map((c) => c.toJson()).toList(),
       if (multiple != null) 'multiple': multiple,
-      if (claimSets != null) 'claimSets': claimSets,
+      if (claimSets != null) 'claim_sets': claimSets,
     };
   }
 
@@ -101,7 +101,7 @@ class Credential<C extends Claim> with JsonSerializable {
           (c['claims'] as List<dynamic>?)
                   ?.map((claim) => Claim.fromJson(claim as Map<String, dynamic>))
                   .toList(),
-      claimSets: (c['claimSets'] as List<dynamic>?)
+      claimSets: (c['claim_sets'] as List<dynamic>?)
           ?.map((cs) => (cs as List<dynamic>).map((id) => id as String).toList())
           .toList(),
     );

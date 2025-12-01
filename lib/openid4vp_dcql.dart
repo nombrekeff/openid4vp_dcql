@@ -6,10 +6,10 @@
 library;
 
 export 'builder/dcql_builder.dart';
-export 'claim.dart';
-export 'credential.dart';
-export 'credential_set.dart';
-export 'dcql_query.dart';
+export 'model/claim.dart';
+export 'model/credential.dart';
+export 'model/credential_set.dart';
+export 'model/dcql_query.dart';
 export 'enum/credential_type.dart';
 export 'enum/doc_type.dart';
 export 'enum/format.dart';
@@ -20,6 +20,6 @@ export 'impl/default_validation.dart';
 export 'impl/doc_types.dart';
 export 'impl/formats.dart';
 export 'json.dart';
-export 'meta.dart';
-export 'trusted_authorities.dart';
+export 'model/meta.dart';
+export 'model/trusted_authorities.dart';
 export 'validation/dcql_validator.dart';
