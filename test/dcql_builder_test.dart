@@ -55,7 +55,10 @@ void main() {
 
       test('claim() adds a claim to the credential', () {
         final claim = Claims.mdocDl.firstName;
-        final query = builder.credential('cred-1').claim(claim).build();
+        final query = builder
+              .credential('cred-1')
+              .claim(claim)
+              .build();
 
         expect(query.credentials.first.claims, hasLength(1));
         expect(query.credentials.first.claims?.first, equals(claim));

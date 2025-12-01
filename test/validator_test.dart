@@ -81,7 +81,12 @@ void main() {
           result.contextPath,
           equals('query.credentials[0].claims[0].path'),
         );
-        expect(result.errors?.first, contains('Claim path cannot be empty'));
+        expect(
+          result.errors?.first,
+          contains(
+            'Path must be a non-empty list of strings, ints (>=0), or null',
+          ),
+        );
       });
 
       test('Fails if claim ID is invalid', () {
@@ -101,7 +106,9 @@ void main() {
         expect(result.contextPath, equals('query.credentials[0].claims[0].id'));
         expect(
           result.errors?.first,
-          contains('Claim ID must consist of alphanumeric'),
+          contains(
+            'ID must be an alpha-numeric string with underscores and hyphens',
+          ),
         );
       });
 
@@ -191,11 +198,13 @@ void main() {
         expect(result.isValid, isFalse);
         expect(
           result.contextPath,
-          equals('query.credentials[0].claims[0].path[1]'),
+          equals('query.credentials[0].claims[0].path'),
         );
         expect(
           result.errors?.first,
-          contains('Claim path elements must be String, int (>=0), or null.'),
+          contains(
+            'Path must be a non-empty list of strings, ints (>=0), or null',
+          ),
         );
       });
     });

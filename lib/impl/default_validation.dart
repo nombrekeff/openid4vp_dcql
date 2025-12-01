@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:openid4vp_dcql/impl/eskema_validators.dart';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 
 class ClaimValidator {
@@ -8,11 +9,8 @@ class ClaimValidator {
     required DcqlQuery query,
     required int credentialIndex,
   }) {
-    if (credential.claims == null) {
-      return ValidationResult.valid();
-    }
-
     if (credential.claims != null) {
+      // list of seen claim ids - used to check for duplicates
       final seenIds = <String>{};
 
       for (var j = 0; j < credential.claims!.length; j++) {
@@ -30,16 +28,14 @@ class ClaimValidator {
           seenIds.add(claim.id!);
         }
 
-        final idValidationResult = validateId(credential, claim, contextPath);
-        if (!idValidationResult.isValid) return idValidationResult;
+        final idResult = validateId(credential, claim, contextPath);
+        if (!idResult.isValid) return idResult;
 
-        final pathValidationResult =
-            validatePath(claim.path, '$contextPath.path');
-        if (!pathValidationResult.isValid) return pathValidationResult;
+        final pathResult = validatePath(claim.path, '$contextPath.path');
+        if (!pathResult.isValid) return pathResult;
 
-        final valuesValidationResult =
-            validateValues(claim.values, '$contextPath.values');
-        if (!valuesValidationResult.isValid) return valuesValidationResult;
+        final valResult = validateValues(claim.values, '$contextPath.values');
+        if (!valResult.isValid) return valResult;
       }
     }
 
@@ -57,64 +53,39 @@ class ClaimValidator {
     bool hasClaimSet =
         credential.claimSets != null && credential.claimSets!.isNotEmpty;
 
-    if (claim.id == null && hasClaimSet) {
-      return ValidationResult.invalid(
-        contextPath: '$contextPath.id',
-        errors: [
-          'Claim ID is required if "claim_sets" is present in the Credential.',
-        ],
-      );
-    }
-
-    if (claim.id != null) {
-      if (claim.id!.isEmpty) {
-        return ValidationResult.invalid(
-          contextPath: '$contextPath.id',
-          errors: ['Claim ID cannot be empty if provided.'],
-        );
-      }
-
-      final idPattern = RegExp(r'^[a-zA-Z0-9_-]+$');
-      if (!idPattern.hasMatch(claim.id!)) {
+    if (claim.id == null) {
+      if (hasClaimSet) {
         return ValidationResult.invalid(
           contextPath: '$contextPath.id',
           errors: [
-            'Claim ID must consist of alphanumeric, underscore (_), or hyphen (-) characters.',
+            'Claim ID is required if "claim_sets" is present in the Credential.',
           ],
         );
       }
+
+      return ValidationResult.valid();
+    }
+
+    final isValidId = idValidator.validate(claim.id);
+
+    if (!isValidId.isValid) {
+      return ValidationResult.invalid(
+        contextPath: '$contextPath.id',
+        errors: [isValidId.expectations.map((e) => e.toString()).join(', ')],
+      );
     }
 
     return ValidationResult.valid();
   }
 
   ValidationResult validatePath(List<dynamic> path, String contextPath) {
-    if (path.isEmpty) {
+    final pathResult = pathValidator.validate(path);
+    
+    if (pathResult.isNotValid) {
       return ValidationResult.invalid(
         contextPath: contextPath,
-        errors: ['Claim path cannot be empty.'],
+        errors: [pathResult.expectations.map((e) => e.toString()).join(', ')],
       );
-    }
-
-    for (var k = 0; k < path.length; k++) {
-      final pathElement = path[k];
-      final isInt = pathElement is int;
-      final isString = pathElement is String;
-      final isNull = pathElement == null;
-
-      if (!isInt && !isString && !isNull) {
-        return ValidationResult.invalid(
-          contextPath: '$contextPath[$k]',
-          errors: ['Claim path elements must be String, int (>=0), or null.'],
-        );
-      }
-
-      if (isInt && pathElement < 0) {
-        return ValidationResult.invalid(
-          contextPath: '$contextPath[$k]',
-          errors: ['Claim path elements must be int (>=0).'],
-        );
-      }
     }
 
     return ValidationResult.valid();

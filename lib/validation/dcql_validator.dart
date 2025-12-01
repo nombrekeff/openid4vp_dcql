@@ -42,7 +42,7 @@ class ValidationResult {
 
   @override
   String toString() {
-    return 'ValidationResult(isValid: $_isValid, errors: $_errors, contextPath: $_contextPath)';
+    return 'ValidationResult(isValid: $_isValid, errors: ${_errors?.join(', ')}, contextPath: $_contextPath)';
   }
 }
 
