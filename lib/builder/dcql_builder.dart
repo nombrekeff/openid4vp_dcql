@@ -5,7 +5,7 @@ import 'package:openid4vp_dcql/credential_set.dart';
 import 'package:openid4vp_dcql/dcql_query.dart';
 import 'package:openid4vp_dcql/enum/credential_type.dart';
 import 'package:openid4vp_dcql/enum/format.dart';
-import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
+import 'package:openid4vp_dcql/extensions/meta_set_filter_extention.dart';
 
 class DcqlBuilder {
   late final DcqlQuery _query;
@@ -24,7 +24,7 @@ class DcqlBuilder {
 
     if (type != null) {
       credential.format = type.format;
-      credential.meta.setFilter(type.docType);
+      credential.meta.setFilter(type);
     } else if (format != null) {
       credential.format = format;
     }

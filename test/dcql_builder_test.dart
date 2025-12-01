@@ -72,7 +72,7 @@ void main() {
       test('mdoc_dl() helper sets format', () {
         final query = builder
             .credential('cred-1')
-            .mdoc_dl()
+            .mDL()
             .build();
         
         expect(query.credentials.first.format, equals(Formats.mdoc));
@@ -81,7 +81,7 @@ void main() {
       test('sdjwt_pid() helper sets format', () {
         final query = builder
             .credential('cred-1')
-            .sdjwt_pid()
+            .jwtPid()
             .build();
         
         expect(query.credentials.first.format, equals(Formats.jwt));

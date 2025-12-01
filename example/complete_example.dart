@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 
 void main() {

@@ -21,5 +21,5 @@ class DocType with JsonSerializable {
   String toString() => id;
 
   @override
-  Map<String, dynamic> toJson() => {'doc_type': id};
+  Map<String, dynamic> toJson() => {'doctype_value': id};
 }

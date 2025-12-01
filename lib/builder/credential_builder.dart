@@ -2,7 +2,7 @@ import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/credential.dart';
 import 'package:openid4vp_dcql/enum/credential_type.dart';
-import 'package:openid4vp_dcql/extensions/mdoc_meta.extension.dart';
+import 'package:openid4vp_dcql/extensions/meta_set_filter_extention.dart';
 import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
 
@@ -58,22 +58,21 @@ class DcqlCredentialBuilder extends DcqlBuilder {
 
   DcqlCredentialBuilder setCredential(CredentialType credentialType) {
     _credential.format = credentialType.format;
-    _credential.meta.setFilter(credentialType.docType);
-
+    _credential.meta.setFilter(credentialType);
     return _credentialBuilder;
   }
 
-  DcqlCredentialBuilder mdoc_dl() {
+  DcqlCredentialBuilder mDL() {
     setCredential(CredentialTypes.mdocDl);
     return _credentialBuilder;
   }
 
-  DcqlCredentialBuilder sdjwt_pid() {
+  DcqlCredentialBuilder jwtPid() {
     setCredential(CredentialTypes.sdJwtPid);
     return _credentialBuilder;
   }
 
-  DcqlCredentialBuilder mdoc_mvrc() {
+  DcqlCredentialBuilder mVRC() {
     setCredential(CredentialTypes.mdocMvrc);
     return _credentialBuilder;
   }

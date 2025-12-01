@@ -87,7 +87,7 @@ void main() {
       Credential(
         id: 'credential-1',
         format: Formats.mso_mdoc,
-        meta: Meta(meta: {'doc_type': 'org.iso.18013.5.1.mDL'}),
+        meta: Meta(meta: {'doctype_value': 'org.iso.18013.5.1.mDL'}),
         claims: [
           Claim(id: 'first_name', path: ['org.iso.18013.5.1', 'first_name']),
           Claim(id: 'doc_number', path: ['org.iso.18013.5.1', 'document_number']),
@@ -99,7 +99,7 @@ void main() {
       Credential(
         id: 'credential-2',
         format: Formats.sd_jwt,
-        meta: Meta(meta: {'doc_type': 'urn:eu.europa.ec.eudi.pid.1'}),
+        meta: Meta(meta: {'vcts_values': ['urn:eu.europa.ec.eudi.pid.1']}),
         claims: [
           Claim(path: ['document_number']),
         ],

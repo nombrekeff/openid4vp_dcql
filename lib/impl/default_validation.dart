@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
-import 'package:openid4vp_dcql/validation/dcql_validator.dart';
 
 class ClaimValidator {
   ValidationResult validate({
