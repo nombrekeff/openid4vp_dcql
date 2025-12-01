@@ -44,6 +44,8 @@
       
 <section class="desc markdown">
   <h1 id="openid4vp-dcql">OpenID4VP DCQL</h1>
+<p><a href="https://github.com/nombrekeff/openid4vp_dcql/actions/workflows/dart.yml"><img src="https://github.com/nombrekeff/openid4vp_dcql/actions/workflows/dart.yml/badge.svg" alt="Status"></a>
+<a href="https://pub.dev/packages/openid4vp_dcql"><img src="https://img.shields.io/pub/v/openid4vp_dcql" alt="Pub"></a></p>
 <p>A Dart library for building and validating <strong>Digital Credentials Query Language (DCQL)</strong> queries as defined in the <a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query">OpenID for Verifiable Presentations (OpenID4VP) v1.0 specification</a>.</p>
 <p>Build complex credential queries with a fluent, type-safe API, validate them against the spec, and serialize them to JSON for transmission.</p>
 <h2 id="package-version-to-spec">Package version to Spec</h2>
@@ -57,7 +59,7 @@
 </thead>
 <tbody>
 <tr>
-<td>v1.0.0</td>
+<td><a href="https://pub.dev/packages/openid4vp_dcql/versions/1.0.0">v1.0.0</a></td>
 <td><a href="https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query">v1.0</a></td>
 </tr>
 </tbody>
@@ -86,7 +88,8 @@
 import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 
 void main() {
-  final query = DcqlBuilder()
+  try {
+    final query = DcqlBuilder()
       // Request an mDoc Driving License
       .credential('credential-1', type: CredentialType.mdocDl)
           .claim(Claims.mdocDl.firstName, id: 'first_name')
@@ -102,15 +105,14 @@ void main() {
       .credentialSet()
           .option(['credential-1'])
           .option(['credential-2'])
-      
+
+      // Build will throw a ValidationException if the query is invalid
+      // can be skipped by setting (skipValidation: true)
       .build();
 
-  // Validate the query structure
-  final validation = DcqlValidator().validate(query);
-  if (validation.isValid) {
     print(jsonEncode(query.toJson()));
-  } else {
-    print('Invalid query: ${validation.errors}');
+  } catch (e) {
+    print(e);
   }
 }
 </code></pre>
@@ -166,17 +168,36 @@ void main() {
 <h3 id="fluent-builder">Fluent Builder</h3>
 <p>The <code>DcqlBuilder</code> allows you to chain methods to define credentials, claims, and sets naturally.</p>
 <h3 id="validation">Validation</h3>
-<p>The library includes a robust validator that checks for:</p>
+<p>The library includes a robust validator <code>DcqlValidator</code> that checks for:</p>
 <ul>
-<li>Unique IDs for credentials and claims.</li>
-<li>Valid references in <code>claim_sets</code> and <code>credential_sets</code>.</li>
-<li>Correct value types and non-empty paths.</li>
+<li><strong>Uniqueness</strong>: Ensures all credential and claim IDs are unique within their scope.</li>
+<li><strong>Referential Integrity</strong>: Verifies that all IDs referenced in <code>claim_sets</code> and <code>credential_sets</code> actually exist.</li>
+<li><strong>Structure</strong>: Checks for non-empty paths, correct value types, and required fields.</li>
+<li><strong>Format Compliance</strong>: Validates format-specific requirements (e.g., <code>doctype_value</code> for mdoc).</li>
 </ul>
+<p>You can validate a query object or a JSON string:</p>
+<pre class="language-dart"><code class="language-dart">final validator = DcqlValidator();
+
+// Validate a DcqlQuery object
+final result = validator.validate(query);
+
+// Validate a JSON string
+final resultJson = validator.validateJson(jsonString);
+
+if (result.isInvalid) {
+  print('Validation failed:');
+  for (final error in result.errors!) {
+    print('- $error');
+  }
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The <code>DcqlBuilder.build()</code> method automatically runs validation and throws a <code>ValidationException</code> if the query is invalid. To skip this check, use <code>.build(skipValidation: true)</code>.</p>
+</blockquote>
 <h3 id="supported-formats">Supported Formats</h3>
 <ul>
 <li><code>mso_mdoc</code> (Mobile Driving License, etc.)</li>
 <li><code>dc+sd-jwt</code> (SD-JWT VC)</li>
-<li><code>jwt_vc_json</code> (W3C Verifiable Credentials)</li>
 </ul>
 <h2 id="contributing">Contributing</h2>
 <p>Open an issue for discussion, then PR with tests.</p>
@@ -398,7 +419,7 @@ void main() {
 <footer>
   <span class="no-break">
     openid4vp_dcql
-      1.0.0
+      1.0.1
   </span>
   
 </footer>

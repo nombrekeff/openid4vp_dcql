@@ -14,6 +14,7 @@ List of package versions and what specs they support
 | version                                                          | Spec                                                                                              |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | [v1.0.0](https://pub.dev/packages/openid4vp_dcql/versions/1.0.0) | [v1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query) |
+| [v1.0.1](https://pub.dev/packages/openid4vp_dcql/versions/1.0.1) | [v1.0](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#name-credential-query) |
 
 ## Why
 
