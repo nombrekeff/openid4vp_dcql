@@ -8,7 +8,7 @@ class DcqlQuery with JsonSerializable {
   List<CredentialSet>? credentialSets;
 
   DcqlQuery({List<Credential>? credentials, this.credentialSets})
-    : credentials = credentials ?? [];
+      : credentials = credentials ?? [];
 
   DcqlQuery addCredential(Credential credential) {
     credentials.add(credential);
@@ -38,7 +38,8 @@ class DcqlQuery with JsonSerializable {
   Map<String, dynamic> toJson() {
     return {
       'credentials': credentials.map((c) => c.toJson()).toList(),
-      'credential_sets': credentialSets?.map((cs) => cs.toJson()).toList(),
+      if (credentialSets != null)
+        'credential_sets': credentialSets?.map((cs) => cs.toJson()).toList(),
     };
   }
 

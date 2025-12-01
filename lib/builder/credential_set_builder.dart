@@ -5,7 +5,8 @@ class DcqlCredentialSetBuilder extends DcqlBuilder {
   late final DcqlCredentialSetBuilder _credentialSetBuilder;
   final CredentialSet _credentialSet;
 
-  DcqlCredentialSetBuilder(DcqlBuilder parent, this._credentialSet) : super(parent.query) {
+  DcqlCredentialSetBuilder(DcqlBuilder parent, this._credentialSet)
+      : super(query: parent.query, validator: parent.validator) {
     _credentialSetBuilder = this;
   }
 

@@ -5,7 +5,7 @@ class Claim with JsonSerializable {
 
   /// The path to the claim in the credential. Must not be empty. String / int / null values are allowed.
   final List<dynamic> path;
-  late final List<Object>? values;
+  final List<Object>? values;
 
   Claim({this.id, required this.path, this.values}) {
     assert(path.isNotEmpty, 'Claim path cannot be empty');

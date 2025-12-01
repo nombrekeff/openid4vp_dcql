@@ -1,8 +1,5 @@
-import 'package:openid4vp_dcql/impl/credential_types.dart';
-import 'package:openid4vp_dcql/impl/formats.dart';
+import 'package:openid4vp_dcql/openid4vp_dcql.dart';
 import 'package:test/test.dart';
-import 'package:openid4vp_dcql/builder/dcql_builder.dart';
-import 'package:openid4vp_dcql/impl/claims.dart';
 
 void main() {
   group('DcqlBuilder', () {
@@ -13,9 +10,9 @@ void main() {
     });
 
     test('build() returns a DcqlQuery', () {
-      final query = builder.build();
+      final query = builder.credential("test").build();
       expect(query, isNotNull);
-      expect(query.credentials, isEmpty);
+      expect(query.credentials, isNotEmpty);
       expect(query.credentialSets, isNull);
     });
 
@@ -27,9 +24,8 @@ void main() {
       });
 
       test('credential() with format sets the format', () {
-        final query = builder
-            .credential('cred-1', format: Formats.mdoc)
-            .build();
+        final query =
+            builder.credential('cred-1', format: Formats.mdoc).build();
         expect(query.credentials.first.format, equals(Formats.mdoc));
       });
 
@@ -37,7 +33,7 @@ void main() {
         final query = builder
             .credential('cred-1', type: CredentialTypes.mdocDl)
             .build();
-        
+
         final cred = query.credentials.first;
         expect(cred.format, equals(Formats.mdoc));
         // We can't easily check the meta filter without exposing it or checking the meta object directly
@@ -47,10 +43,7 @@ void main() {
 
       test('claim() adds a claim to the credential', () {
         final claim = Claims.mdocDl.firstName;
-        final query = builder
-            .credential('cred-1')
-            .claim(claim)
-            .build();
+        final query = builder.credential('cred-1').claim(claim).build();
 
         expect(query.credentials.first.claims, hasLength(1));
         expect(query.credentials.first.claims?.first, equals(claim));
@@ -70,41 +63,47 @@ void main() {
       });
 
       test('mdoc_dl() helper sets format', () {
-        final query = builder
-            .credential('cred-1')
-            .mDL()
-            .build();
-        
+        final query = builder.credential('cred-1').mDL().build();
+
         expect(query.credentials.first.format, equals(Formats.mdoc));
       });
 
       test('sdjwt_pid() helper sets format', () {
-        final query = builder
-            .credential('cred-1')
-            .jwtPid()
-            .build();
-        
+        final query = builder.credential('cred-1').jwtPid().build();
+
         expect(query.credentials.first.format, equals(Formats.jwt));
       });
     });
 
     group('Credential Set Building', () {
+      test('credentialSet() fails if no option added to set', () {
+        expect(() => builder.credential('cred-1').credentialSet().build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
       test('credentialSet() adds a credential set', () {
-        final query = builder.credentialSet().build();
+        final query = builder
+            .credential('cred-1')
+            .credentialSet()
+            .option(['cred-1']).build();
         expect(query.credentialSets, hasLength(1));
       });
 
       test('credentialSet() with required flag', () {
-        final query = builder.credentialSet(required: false).build();
+        final query = builder
+            .credential('cred-1')
+            .credentialSet(required: false)
+            .option(['cred-1']).build();
         expect(query.credentialSets?.first.required, isFalse);
       });
 
       test('option() adds options to credential set', () {
         final query = builder
+            .credential('cred-1')
+            .credential('cred-2')
+            .credential('cred-3')
             .credentialSet()
-            .option(['cred-1'])
-            .option(['cred-2', 'cred-3'])
-            .build();
+            .option(['cred-1']).option(['cred-2', 'cred-3']).build();
 
         final set = query.credentialSets?.first;
         expect(set?.options, hasLength(2));
@@ -112,41 +111,42 @@ void main() {
         expect(set?.options[1], equals(['cred-2', 'cred-3']));
       });
 
+      test('credentialSet() fails if there are no options', () {
+        expect(() => builder.credentialSet().build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
       test('required() sets required flag', () {
         final query = builder
+            .credential('cred-1')
             .credentialSet()
+            .option(['cred-1'])
             .required(false)
             .build();
-        
+
         expect(query.credentialSets?.first.required, isFalse);
       });
     });
 
     group('Chaining and Complex Queries', () {
       test('Can chain multiple credentials', () {
-        final query = builder
-            .credential('c1')
-            .credential('c2')
-            .build();
-        
+        final query = builder.credential('c1').credential('c2').build();
+
         expect(query.credentials, hasLength(2));
         expect(query.credentials[0].id, equals('c1'));
         expect(query.credentials[1].id, equals('c2'));
       });
 
       test('Can chain credentials and sets', () {
-        final query = builder
-            .credential('c1')
-            .credentialSet()
-            .option(['c1'])
-            .build();
-        
+        final query =
+            builder.credential('c1').credentialSet().option(['c1']).build();
+
         expect(query.credentials, hasLength(1));
         expect(query.credentialSets, hasLength(1));
       });
 
       test(r'$_ property allows "breaking" out (fluent style)', () {
-        // In the current implementation, $_ returns 'this', so it doesn't strictly break out 
+        // In the current implementation, $_ returns 'this', so it doesn't strictly break out
         // in terms of type (it's still a builder), but it allows visual separation.
         final query = builder
             .credential('c1')
@@ -154,10 +154,56 @@ void main() {
             .$_
             .credential('c2')
             .build();
-        
+
         expect(query.credentials, hasLength(2));
         expect(query.credentials[0].claims, hasLength(1));
         expect(query.credentials[1].claims, isNull);
+      });
+    });
+
+    group('Validation', () {
+      test('credentialSet() fails if option is empty list', () {
+        expect(
+            () => builder
+                .credential('cred-1')
+                .credentialSet()
+                .option([])
+                .build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
+      test('credential() fails if id is invalid', () {
+        expect(() => builder.credential('invalid id').build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
+      test('claim() fails if id is invalid', () {
+        expect(
+            () => builder
+                .credential('cred-1')
+                .claim(Claims.mdocDl.firstName, id: 'invalid id')
+                .build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
+      test('claim() fails if id is missing when claim sets are present', () {
+        expect(
+            () => builder
+                .credential('cred-1')
+                .claim(Claims.mdocDl.firstName) // No ID
+                .claimSet(['some_id'])
+                .build(),
+            throwsA(isA<ValidationExpection>()));
+      });
+
+      test('claimSet() fails if claim ID does not exist', () {
+        expect(
+            () => builder
+                .credential('cred-1')
+                .claim(Claims.mdocDl.firstName, id: 'id1')
+                .claimSet(['non_existent_id'])
+                .build(),
+            throwsA(isA<ValidationExpection>()));
       });
     });
   });

@@ -6,7 +6,7 @@ export 'dcql_query.dart';
 export 'enum/credential_type.dart';
 export 'enum/doc_type.dart';
 export 'enum/format.dart';
-export 'extensions/meta_set_filter_extention.dart';
+export 'extensions/meta_set_filter_extension.dart';
 export 'impl/claims.dart';
 export 'impl/credential_types.dart';
 export 'impl/doc_types.dart';

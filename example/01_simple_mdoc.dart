@@ -30,5 +30,7 @@ void main() {
       .build();
 
   print('Example 1 (Simple mdoc): $query');
-  print('JSON: ${jsonEncode(query.toJson())}');
+
+  final encoder = JsonEncoder.withIndent('  ');
+  print('JSON: ${encoder.convert(query.toJson())}');
 }

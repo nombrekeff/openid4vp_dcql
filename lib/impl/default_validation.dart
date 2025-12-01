@@ -157,7 +157,7 @@ class ClaimSetValidator {
 
 class CredentialsValidator {
   final _claimValidator = ClaimValidator();
-  // final _claimSetValidator = ClaimSetValidator();
+  final _claimSetValidator = ClaimSetValidator();
 
   ValidationResult validate(DcqlQuery query) {
     if (query.credentials.isEmpty) {
@@ -200,6 +200,16 @@ class CredentialsValidator {
         if (claimValidationResult.isInvalid) {
           return claimValidationResult;
         }
+      }
+
+      final claimSetValidationResult = _claimSetValidator.validate(
+        credential: credential,
+        query: query,
+        credentialIndex: i,
+      );
+
+      if (claimSetValidationResult.isInvalid) {
+        return claimSetValidationResult;
       }
     }
 

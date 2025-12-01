@@ -2,7 +2,7 @@ import 'package:openid4vp_dcql/builder/dcql_builder.dart';
 import 'package:openid4vp_dcql/claim.dart';
 import 'package:openid4vp_dcql/credential.dart';
 import 'package:openid4vp_dcql/enum/credential_type.dart';
-import 'package:openid4vp_dcql/extensions/meta_set_filter_extention.dart';
+import 'package:openid4vp_dcql/extensions/meta_set_filter_extension.dart';
 import 'package:openid4vp_dcql/impl/credential_types.dart';
 import 'package:openid4vp_dcql/trusted_authorities.dart';
 
@@ -10,14 +10,14 @@ class DcqlCredentialBuilder extends DcqlBuilder {
   late final DcqlCredentialBuilder _credentialBuilder;
   final Credential _credential;
 
-  DcqlCredentialBuilder(DcqlBuilder parent, this._credential) : super(parent.query) {
+  DcqlCredentialBuilder(DcqlBuilder parent, this._credential)
+      : super(query: parent.query, validator: parent.validator) {
     _credentialBuilder = this;
   }
 
   DcqlCredentialBuilder claim(Claim claim, {String? id}) {
     if (id != null) {
-      final newClaim = Claim(id: id, path: claim.path, values: claim.values);
-      _credential.addClaim(newClaim);
+      _credential.addClaim(claim.copyWith(id: id));
     } else {
       _credential.addClaim(claim);
     }
@@ -32,7 +32,9 @@ class DcqlCredentialBuilder extends DcqlBuilder {
 
   DcqlCredentialBuilder trustedAuthority(String type, List<String> values) {
     _credential.trustedAuthorities ??= [];
-    _credential.trustedAuthorities!.add(TrustedAuthority(type: type, values: values));
+    _credential.trustedAuthorities!.add(
+      TrustedAuthority(type: type, values: values),
+    );
     return _credentialBuilder;
   }
 

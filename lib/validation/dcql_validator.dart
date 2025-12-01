@@ -5,20 +5,25 @@ class ValidationResult {
   final String? _contextPath;
   final List<String>? _errors;
 
-  ValidationResult({String? contextPath, bool isValid = true, List<String> errors = const []})
-    : _isValid = isValid,
-      _errors = errors,
-      _contextPath = contextPath;
+  ValidationResult(
+      {String? contextPath,
+      bool isValid = true,
+      List<String> errors = const []})
+      : _isValid = isValid,
+        _errors = errors,
+        _contextPath = contextPath;
 
   ValidationResult.valid({String? contextPath, List<String> errors = const []})
-    : _isValid = true,
-      _errors = errors,
-      _contextPath = contextPath;
+      : _isValid = true,
+        _errors = errors,
+        _contextPath = contextPath;
 
-  ValidationResult.invalid({String? contextPath, List<String> errors = const []})
-    : _isValid = false,
-      _errors = errors,
-      _contextPath = contextPath;
+  ValidationResult.invalid({
+    String? contextPath,
+    List<String> errors = const [],
+  })  : _isValid = false,
+        _errors = errors,
+        _contextPath = contextPath;
 
   bool get isValid => _isValid;
   bool get isInvalid => !_isValid;
@@ -29,6 +34,17 @@ class ValidationResult {
   @override
   String toString() {
     return 'ValidationResult(isValid: $_isValid, errors: $_errors, contextPath: $_contextPath)';
+  }
+}
+
+class ValidationExpection implements Exception {
+  final ValidationResult result;
+
+  ValidationExpection(this.result);
+
+  @override
+  String toString() {
+    return 'ValidationExpection(result: $result)';
   }
 }
 
