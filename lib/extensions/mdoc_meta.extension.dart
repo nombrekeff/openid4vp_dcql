@@ -3,6 +3,6 @@ import 'package:openid4vp_dcql/meta.dart';
 
 extension MdocMetaExtension on Meta {
   Meta setFilter(DocType docType) {
-    return set('doc_type', docType.id);
+    return set('doctype_value', docType.id);
   }
 }

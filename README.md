@@ -65,6 +65,58 @@ void main() {
 }
 ```
 
+## Manual Construction
+
+You can also construct the query object directly without using the builder. However, you will lose some conveniences, such as automatic path prefixing (namespaces) for claims.
+
+```dart
+import 'dart:convert';
+import 'package:openid4vp_dcql/openid4vp_dcql.dart';
+
+void main() {
+  final query = DcqlQuery(
+    credentials: [
+      Credential(
+        id: 'credential-1',
+        format: Formats.mso_mdoc,
+        meta: Meta(meta: {'doc_type': 'org.iso.18013.5.1.mDL'}),
+        claims: [
+          Claim(id: 'first_name', path: ['org.iso.18013.5.1', 'first_name']),
+          Claim(id: 'doc_number', path: ['org.iso.18013.5.1', 'document_number']),
+        ],
+        claimSets: [
+          ['first_name', 'doc_number']
+        ],
+      ),
+      Credential(
+        id: 'credential-2',
+        format: Formats.sd_jwt,
+        meta: Meta(meta: {'doc_type': 'urn:eu.europa.ec.eudi.pid.1'}),
+        claims: [
+          Claim(path: ['document_number']),
+        ],
+      ),
+    ],
+    credentialSets: [
+      CredentialSet(
+        options: [
+          ['credential-1'],
+          ['credential-2'],
+        ],
+      ),
+    ],
+  );
+
+  // Validate the query structure
+  final validation = DcqlValidator().validate(query);
+  if (validation.isValid) {
+    print(jsonEncode(query.toJson()));
+  } else {
+    print('Invalid query: ${validation.errors}');
+  }
+}
+```
+
 ## Features
 
 ### Fluent Builder
